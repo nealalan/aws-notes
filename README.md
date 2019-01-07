@@ -427,14 +427,11 @@ AZs are connected with low-latency private links (not public internet)
 - Free tier is not applicable across the accounts
 
 ## [AWS Multiple Account Billing Strategy](https://aws.amazon.com/answers/account-management/aws-multi-account-billing-strategy/)
-
 - Use a group alias rather than an individual email address as the account email address to ensure continuity of communication
 - Implement AWS tagging standards across your accounts
-- Hybrid Account Structures Example
-  ![](https://d1.awsstatic.com/aws-answers/answers-images/hybrid-structure-1.01c5f8711781b85d4c1a429704d934d8c28a2a51.png)
+
 
 ## Tags & [Resource Groups](https://docs.aws.amazon.com/ARG/latest/userguide/welcome.html)
-
 - Resource Group is a collection of resources that share one or more tags
   - [AWS Resource Groups API](https://docs.aws.amazon.com/ARG/latest/APIReference/Welcome.html)
 - Tags are key and value pairs that act as metadata for organizing your AWS resources
@@ -492,7 +489,6 @@ AZs are connected with low-latency private links (not public internet)
 - used with AWS STS (Security Token Service), a lightweight web service that provides temporary, limited privilege credentials for IAM users or for authenticated federated users
 
 ### IAM role scenarios
-
 - Service access for e.g. EC2 to access S3 or DynamoDB
 - Cross Account access for users
   - with user within the same account
@@ -526,6 +522,39 @@ AZs are connected with low-latency private links (not public internet)
 - **NOT fault tolerant** and would need to build a cluster - if one fails all the keys are lost
 - expensive, prefer AWS Key Management Service (KMS) if cost is a criteria
 
+### [AWS Directory Services](https://aws.amazon.com/directoryservice/)
+- **Managed Microsoft Active Directory in the AWS Cloud**
+- gives applications in AWS access to Active Directory services
+- different from SAML + AD - where the access is granted to AWS services through Temporary Credentials
+
+![](https://d1.awsstatic.com/Products/product-name/diagrams/directory_service_howitworks.80bfccbf2f5d1d63558ec3c086aff247147258f1.png)
+
+#### Benefits
+- EASILY MIGRATE DIRECTORY-AWARE, ON-PREMISES WORKLOADS
+- USE ACTUAL MICROSOFT ACTIVE DIRECTORY
+- SHARE A SINGLE DIRECTORY FOR CLOUD WORKLOADS
+- EASILY EXTEND EXISTING DOMAINS
+- CENTRALLY MANAGE APPLICATION ACCESS AND DEVICES IN THE AWS CLOUD
+- SIMPLIFY ADMINISTRATION WITH A MANAGED SERVICE
+
+#### [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html)
+- least expensive but does not support Microsoft AD advance features
+- provides a Samba 4 Microsoft Active Directory compatible standalone directory service on AWS
+- No single point of Authentication or Authorization, as a separate copy is maintained
+- trust relationships cannot be setup between Simple AD and other Active Directory domains
+- Don’t use it, if the requirement is to leverage access and control through centralized authentication service
+
+#### [AD Connector](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_ad_connector.html)
+- acts as a hosted proxy service for cloud instances to connect to on-premises Active Directory
+- enables consistent enforcement (between cloud and on-prem) of existing security policies, such as:
+  - password expiration
+  - password history
+  - account lockouts 
+- needs VPN connectivity (or Direct Connect)
+- enable MFA by integrating with existing RADIUS-based MFA solutions 
+- does not cache data - **might lead to latency**
+
+#### Read-only Domain Controllers (RODCs)
 
 
 
