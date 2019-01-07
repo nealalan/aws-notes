@@ -1,8 +1,14 @@
 # [nealalan.github.io](https://nealalan.github.io)/[aws-notes](https://nealalan.github.io/aws-notes)
 
+## TOC
+  - [AWS Well-Architected Framework](https://nealalan.github.io/aws-notes/#aws-well-architected-framework-june-2018-version)
+  - [AWS Disaster Recovery Whitepaper]()
+  - [AWS Services Summary Cheat Sheet]()
+
+
 ## [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/) (June 2018 version)
 
-#### Good Design Principles
+### Good Design Principles
 - Stop guessing your capacity needs
 - Test systems at production scale
 - Automate to make architectural experimentation easier
@@ -155,6 +161,7 @@
 ##### Key AWS Services
 1. Identity and Access Management 
   - AWS IAM
+    - 
 2. Detective Control
   - AWS CloudTrail - records AWS API calls
   - AWS Config - inventory of AWS resources and config
@@ -342,6 +349,185 @@
   - Schedule review (Sol Arch, acct team, cost benefit)
   - Establish a cost optimization function / team
   - Review and analyze workload
+
+## [Disaster Recovery Whitepaper](https://aws.amazon.com/whitepapers/using-aws-for-disaster-recovery/) (2014)
+- Recovery Time Objective (RTO) - the time it takes after a disruption to restore a business process to its service level and 
+- Recovery Point Objective (RPO) - acceptable amount of data loss measured in time before the disaster occurs
+
+### Techniques
+- Backup & Restore – Data is backed up and restored, within nothing running
+- Pilot light – Only minimal critical service like RDS is running and rest of the services can be recreated and scaled during recovery
+- Warm Standby – Fully functional site with minimal configuration is available and can be scaled during recovery
+- Multi-Site – Fully functional site with identical configuration is available and processes the load
+
+### AWS Services for recovery
+- Region and AZ to launch services across multiple facilities
+- EC2 instances with the ability to scale and launch across AZs
+- EBS with Snapshot to recreate volumes in different AZ or region
+- AMI to quickly launch preconfigured EC2 instances
+- ELB and Auto Scaling to scale and launch instances across AZs
+- VPC to create private, isolated section
+- Elastic IP address as static IP address
+- ENI with pre allocated Mac Address
+- Route 53 is highly available and scalable DNS service to distribute traffic across EC2 instances and ELB in different AZs and regions
+- Direct Connect for speed data transfer (takes time to setup and expensive then VPN)
+- S3 and Glacier (with RTO of 3-5 hours) provides durable storage
+- RDS snapshots and Multi AZ support and Read Replicas across regions
+- DynamoDB with cross region replication
+- Redshift snapshots to recreate the cluster
+- Storage Gateway to backup the data in AWS
+- Import/Export to move large amount of data to AWS (if internet speed is the bottleneck)
+- CloudFormation, Elastic Beanstalk and Opsworks as orchestration tools for automation and recreate the infrastructure
+
+
+
+## AWS Services Summary Cheat Sheet
+
+Original Source: [http://jayendrapatil.com/aws-certification-exam-cheat-sheet/](http://jayendrapatil.com/aws-certification-exam-cheat-sheet/)
+
+### [AWS Organizations](https://aws.amazon.com/organizations/)
+
+- offers **policy-based management for multiple AWS accounts**
+- allows creation of groups of accounts and then apply policies to those groups
+- enables you to centrally manage policies across multiple accounts, without requiring custom scripts and manual processes.
+- helps simplify the billing for multiple accounts by enabling the setup of a single payment method for all the accounts in the organization through consolidated billing
+
+### [AWS Global Infrastructure](https://aws.amazon.com/about-aws/global-infrastructure/) (AWS Region, AZs, Edge locations)
+
+- Each region is a separate geographic area, completely independent, isolated from the other regions & helps achieve the greatest possible fault tolerance and stability
+  - Communication between regions is across the public Internet
+  - Each region has multiple Availability Zones (UPDATE: Osaka-Local has one region has 1 AZ)
+- Each AZ is physically isolated, geographically separated from each other and designed as an independent failure zone
+AZs are connected with low-latency private links (not public internet)
+- Edge locations are locations maintained by AWS through a worldwide network of data centers for the distribution of content to reduce latency. (Not necessarily in the AZ's)
+- AWS has announced plans to expand with 12 new AZs in four new geographic Regions: Bahrain, Cape Town, Hong Kong SAR, and Milan. (As of Jan 2019)
+
+### AWS Services Region, AZ, Subnet VPC limitations
+- Services like IAM (user, role, group, SSL certificate), Route 53, STS are Global and available across regions
+- All other AWS services are limited to Region or within Region and do not exclusively copy data across regions unless configured
+- AMIs are limited to regions and need to be copied over to other region
+- EBS volumes are limited to the AZ, and can be migrated by creating snapshots and copying them to another region
+- Reserved instances can be migrated to other AZ 
+- RDS instances are limited to the region and can be recreated in a different region by either using snapshots or promoting a Read Replica
+- Placement groups are limited to the AZ
+- Cluster Placement groups are limited to single  AZs
+- Spread Placement groups can span across multiple Availability Zones
+- S3 data is replicated within the region to AZs and can be move to another region using cross region replication
+  - [Cross region replication (CRR)](https://docs.aws.amazon.com/AmazonS3/latest/dev/crr.html) use and requirements
+- DynamoDB maintains data within the region and can be replicated to another region using DynamoDB cross region replication (using DynamoDB streams) or Data Pipeline using EMR (old method)
+- Redshift Cluster span within an AZ only, and can be created in other AZ using snapshots
+
+### [AWS Consolidated Billing](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/consolidated-billing.html)
+
+- One bill for multiple AWS accouns
+- Paying account with multiple linked accounts
+- Payer account is independent and should be only used for billing purpose
+- Paying account cannot access resources of other accounts unless given exclusively access through Cross Account roles
+- All linked accounts are independent and soft limit of 20
+- Allows unused Reserved Instances to be applied across the group
+- Free tier is not applicable across the accounts
+
+### [AWS Multiple Account Billing Strategy](https://aws.amazon.com/answers/account-management/aws-multi-account-billing-strategy/)
+
+- Use a group alias rather than an individual email address as the account email address to ensure continuity of communication
+- Implement AWS tagging standards across your accounts
+- Hybrid Account Structures Example
+  ![](https://d1.awsstatic.com/aws-answers/answers-images/hybrid-structure-1.01c5f8711781b85d4c1a429704d934d8c28a2a51.png)
+
+### Tags & [Resource Groups](https://docs.aws.amazon.com/ARG/latest/userguide/welcome.html)
+
+- Resource Group is a collection of resources that share one or more tags
+  - [AWS Resource Groups API](https://docs.aws.amazon.com/ARG/latest/APIReference/Welcome.html)
+- Tags are key and value pairs that act as metadata for organizing your AWS resources
+- Tags can be inherited when created resources created from Auto Scaling, Cloud Formation, Elastic Beanstalk etc
+- Tags and Resource Groups can be used for:
+  - Cost allocation to categorize and track the AWS costs
+  - Conditional Access Control policy to define resource permission based on tags
+  - Applying updates or security patches. 
+  - Upgrading applications.
+  - Opening or closing ports to network traffic.
+  - Collecting specific log and monitoring data from your fleet of instances.
+
+### IDS/IPS
+- Promiscuous mode is not allowed. AWS and Hypervisor will not deliver any traffic to instances this is not specifically addressed to the instance
+
+#### Strategies
+- Host Based Firewall 
+  - Forward Deployed IDS where the IDS itself is installed on the instances
+  – Traffic Replication where IDS agents installed on instances which send/duplicate the data to a centralized IDS system
+- In-Line Firewall 
+  – Inbound IDS/IPS Tier (like a WAF configuration) which identifies and drops suspect packets
+
+### DDOS Mitigation
+- Minimize the Attack surface
+  - Use AWS ELB, AWS CloudFront, and AWS Route 53 to distribute load
+  - maintain resources in private subnets and use Bastion servers
+- Scale to absorb the attack
+  - Scaling helps buy time to analyze and respond to an attack
+  - ELB auto scaling help handle increased load to absorb attacks
+  - CloudFront and Route 53 inherently scales as per the demand
+- Safeguard exposed resources
+  -  use Route 53 for aliases to hide source IPs and Private DNS
+  -  use CloudFront geo restriction and Origin Access Identity
+  - use WAF as part of the infrastructure
+- Learn normal behavior (IDS/WAF)
+  - analyze and benchmark to define rules on normal behavior
+  - use CloudWatch
+- Create an IR plan for attacks
+
+### Security & Identity Services - IAM
+- securely control access to AWS services and resources
+- helps create and manage user identities and grant permissions for those users to access AWS resources
+- helps create groups for multiple users with similar permissions
+- not appropriate for application authentication
+- is Global and does not need to be migrated to a different region
+- helps define Policies,
+  - in JSON format
+  - all permissions are implicitly denied by default
+  - most restrictive policy wins
+  
+#### IAM Role
+- helps grants and delegate access to users and services without the need of creating permanent credentials
+- IAM users or AWS services can assume a role to obtain temporary security credentials that can be used to make AWS API calls
+- needs Trust policy to define who and Permission policy to define what the user or service can access
+- used with AWS STS (Security Token Service), a lightweight web service that provides temporary, limited privilege credentials for IAM users or for authenticated federated users
+
+#### IAM role scenarios
+
+- Service access for e.g. EC2 to access S3 or DynamoDB
+- Cross Account access for users
+  - with user within the same account
+  - with user within an AWS account owned the same owner
+  - with user from a Third Party AWS account with External ID for enhanced security
+- Identity Providers & Federation
+  - Web Identity Federation, where the user can be authenticated using external authentication Identity providers like Amazon, Google or any OpenId IdP using AssumeRoleWithWebIdentity
+  - Identity Provider using SAML 2.0, where the user can be authenticated using on premises Active Directory, Open Ldap or any SAML 2.0 compliant IdP using AssumeRoleWithSAML
+  - For other Identity Providers, use Identity Broker to authenticate and provide temporary Credentials using AssumeRole (recommended) or GetFederationToken
+
+#### IAM Best Practices
+- Do not use Root account for anything other than billing
+- Create Individual IAM users
+- Use groups to assign permissions to IAM users
+- Grant least privilege
+- **Use IAM roles for applications on EC2**
+- Delegate using roles instead of sharing credentials
+- Rotate credentials regularly
+- Use Policy conditions for increased granularity
+- Use CloudTrail to keep a history of activity
+- Enforce a strong IAM password policy for IAM users
+- Remove all unused users and credentials
+
+### Security & Identity Services - [CloudHSM](https://aws.amazon.com/cloudhsm/)
+- provides secure cryptographic key storage to customers by making hardware security modules (HSMs)
+- single tenant, dedicated physical device to securely generate, store, and manage cryptographic keys used for data encryption
+- inside the VPC (not EC2-classic) & isolated from the rest of the network
+- can use VPC peering to connect to CloudHSM from multiple VPCs
+- integrated with Amazon Redshift and Amazon RDS for Oracle
+- EBS volume encryption, S3 object encryption and key management can be done with CloudHSM w/ custom application scripting
+- **NOT fault tolerant** and would need to build a cluster - if one fails all the keys are lost
+- expensive, prefer AWS Key Management Service (KMS) if cost is a criteria
+
+
 
 
 
