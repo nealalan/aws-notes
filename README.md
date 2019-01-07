@@ -2,13 +2,13 @@
 
 ## TOC
   - [AWS Well-Architected Framework](https://nealalan.github.io/aws-notes/#aws-well-architected-framework-june-2018-version)
-  - [AWS Disaster Recovery Whitepaper]()
-  - [AWS Services Summary Cheat Sheet]()
+  - [AWS Disaster Recovery Whitepaper](https://nealalan.github.io/aws-notes/#disaster-recovery-whitepaper-2014)
+  - [AWS Services Summary Cheat Sheet](https://nealalan.github.io/aws-notes/#aws-services-summary-cheat-sheet)
 
 
-## [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/) (June 2018 version)
+# [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/) (June 2018 version)
 
-### Good Design Principles
+## Good Design Principles
 - Stop guessing your capacity needs
 - Test systems at production scale
 - Automate to make architectural experimentation easier
@@ -16,16 +16,16 @@
 - Drive architectures using data
 - Improve through game days
 
-### The Five Pillars of the Well-Architected Framework
+## The Five Pillars of the Well-Architected Framework
 1) OPS: Operational Excellence
 2) SEC: Security
 3) REL: Reliability
 4) PERF: Performance Efficiency
 5) COST: Cost Optimization
 
-#### 1) OPS: Operational Excellence
+## 1) OPS: Operational Excellence
 
-##### Design Principles for Operational Excellence
+### Design Principles for Operational Excellence
 - Perform operations as code - limit human error and enable consistent responses to events
 - Annotate documentation
 - Make frequent, small, reversible changes
@@ -33,7 +33,7 @@
 - Anticipate failure
 - Learn from all operational failures
 
-##### Best Practices - Prepare, Operate, Evolve
+### Best Practices - Prepare, Operate, Evolve
 - OPS 1: What factors drive your operational priorities?
   - Evaluate Business neets
   - Evaluate compliance requirements
@@ -79,12 +79,12 @@
   - Document and share lessons learned
   - Perform ops metrics reviews
 
-###### Key Services
+#### Key Services
 - AWS CloudFormation = essential to Ops Excellence
 
-#### 2) SEC: Security
+## 2) SEC: Security
 
-##### Design principles for Security
+### Design principles for Security
 
 - Implement a strong identity foundation
   - principle of least privilege
@@ -103,7 +103,7 @@
 - Keep people away from data
 - **Prepare** for security events
 
-##### Best Practices
+### Best Practices
 - SEC 1: How do you manage credentials for your workload?
   - Enforce use of MFA, PW reqs
   - Rotate creds regularly
@@ -158,10 +158,9 @@
   - Pre-deployed tools
   - Run game days
 
-##### Key AWS Services
+### Key AWS Services
 1. Identity and Access Management 
   - AWS IAM
-    - 
 2. Detective Control
   - AWS CloudTrail - records AWS API calls
   - AWS Config - inventory of AWS resources and config
@@ -185,9 +184,9 @@
   - AWS CloudFormation - create a trusted env or clean room for investigations
   - AWS CloudWatch - can trigger responses (including AWS Lambda)
 
-#### 3) REL: Reliability
+## 3) REL: Reliability
 
-##### Best Practices - Foundations, Change management, Failure management
+### Best Practices - Foundations, Change management, Failure management
 - REL 1: How are you managing AWS service limits for your accounts?
   - Active monitoring and managing limits
   - Implemen automated monitoring and mgmt or limits
@@ -229,16 +228,16 @@
   - Conduct RCAs
 - REL 9: How do you plan for disaster recovery?
 
-#### 4) PERF: Performance Efficiency
+## 4) PERF: Performance Efficiency
 
-##### Design Principles for Performance Efficiency
+### Design Principles for Performance Efficiency
 - Democratize advanced technologies
 - Go global in minutes
 - Use serverless architectures
 - Experiment more often
 - Mechanical sympathy
 
-##### Best Practices & Key AWS Services for Performance Efficiency
+### Best Practices & Key AWS Services for Performance Efficiency
 - PERF 1: How do you select the best performing architecture?
   - Benchmarking
   - Load test
@@ -297,15 +296,15 @@
   - Test and validate DR implementation
   - Recovery is automated
 
-#### 5) Cost Optimization
+## 5) Cost Optimization
 
-##### Pillars for cost optimization & Key Services
+### Pillars for cost optimization & Key Services
 1. Cost-Effective Resources
 2. Matching supply and demand
 3. Expenditure Awareness
 4. Optimizing Over Time
 
-##### Best Practices for Cost Optimization
+### Best Practices for Cost Optimization
 - COST 1: How do you evaluate cost when you select AWS services?
   - Select service for cost reduction
   - Optimize for license costs
@@ -350,17 +349,17 @@
   - Establish a cost optimization function / team
   - Review and analyze workload
 
-## [Disaster Recovery Whitepaper](https://aws.amazon.com/whitepapers/using-aws-for-disaster-recovery/) (2014)
+# [Disaster Recovery Whitepaper](https://aws.amazon.com/whitepapers/using-aws-for-disaster-recovery/) (2014)
 - Recovery Time Objective (RTO) - the time it takes after a disruption to restore a business process to its service level and 
 - Recovery Point Objective (RPO) - acceptable amount of data loss measured in time before the disaster occurs
 
-### Techniques
+## Techniques
 - Backup & Restore – Data is backed up and restored, within nothing running
 - Pilot light – Only minimal critical service like RDS is running and rest of the services can be recreated and scaled during recovery
 - Warm Standby – Fully functional site with minimal configuration is available and can be scaled during recovery
 - Multi-Site – Fully functional site with identical configuration is available and processes the load
 
-### AWS Services for recovery
+## AWS Services for recovery
 - Region and AZ to launch services across multiple facilities
 - EC2 instances with the ability to scale and launch across AZs
 - EBS with Snapshot to recreate volumes in different AZ or region
@@ -381,18 +380,18 @@
 
 
 
-## AWS Services Summary Cheat Sheet
+# AWS Services Summary Cheat Sheet
 
 Original Source: [http://jayendrapatil.com/aws-certification-exam-cheat-sheet/](http://jayendrapatil.com/aws-certification-exam-cheat-sheet/)
 
-### [AWS Organizations](https://aws.amazon.com/organizations/)
+## [AWS Organizations](https://aws.amazon.com/organizations/)
 
 - offers **policy-based management for multiple AWS accounts**
 - allows creation of groups of accounts and then apply policies to those groups
 - enables you to centrally manage policies across multiple accounts, without requiring custom scripts and manual processes.
 - helps simplify the billing for multiple accounts by enabling the setup of a single payment method for all the accounts in the organization through consolidated billing
 
-### [AWS Global Infrastructure](https://aws.amazon.com/about-aws/global-infrastructure/) (AWS Region, AZs, Edge locations)
+## [AWS Global Infrastructure](https://aws.amazon.com/about-aws/global-infrastructure/) (AWS Region, AZs, Edge locations)
 
 - Each region is a separate geographic area, completely independent, isolated from the other regions & helps achieve the greatest possible fault tolerance and stability
   - Communication between regions is across the public Internet
@@ -402,7 +401,7 @@ AZs are connected with low-latency private links (not public internet)
 - Edge locations are locations maintained by AWS through a worldwide network of data centers for the distribution of content to reduce latency. (Not necessarily in the AZ's)
 - AWS has announced plans to expand with 12 new AZs in four new geographic Regions: Bahrain, Cape Town, Hong Kong SAR, and Milan. (As of Jan 2019)
 
-### AWS Services Region, AZ, Subnet VPC limitations
+## AWS Services Region, AZ, Subnet VPC limitations
 - Services like IAM (user, role, group, SSL certificate), Route 53, STS are Global and available across regions
 - All other AWS services are limited to Region or within Region and do not exclusively copy data across regions unless configured
 - AMIs are limited to regions and need to be copied over to other region
@@ -417,7 +416,7 @@ AZs are connected with low-latency private links (not public internet)
 - DynamoDB maintains data within the region and can be replicated to another region using DynamoDB cross region replication (using DynamoDB streams) or Data Pipeline using EMR (old method)
 - Redshift Cluster span within an AZ only, and can be created in other AZ using snapshots
 
-### [AWS Consolidated Billing](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/consolidated-billing.html)
+## [AWS Consolidated Billing](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/consolidated-billing.html)
 
 - One bill for multiple AWS accouns
 - Paying account with multiple linked accounts
@@ -427,14 +426,14 @@ AZs are connected with low-latency private links (not public internet)
 - Allows unused Reserved Instances to be applied across the group
 - Free tier is not applicable across the accounts
 
-### [AWS Multiple Account Billing Strategy](https://aws.amazon.com/answers/account-management/aws-multi-account-billing-strategy/)
+## [AWS Multiple Account Billing Strategy](https://aws.amazon.com/answers/account-management/aws-multi-account-billing-strategy/)
 
 - Use a group alias rather than an individual email address as the account email address to ensure continuity of communication
 - Implement AWS tagging standards across your accounts
 - Hybrid Account Structures Example
   ![](https://d1.awsstatic.com/aws-answers/answers-images/hybrid-structure-1.01c5f8711781b85d4c1a429704d934d8c28a2a51.png)
 
-### Tags & [Resource Groups](https://docs.aws.amazon.com/ARG/latest/userguide/welcome.html)
+## Tags & [Resource Groups](https://docs.aws.amazon.com/ARG/latest/userguide/welcome.html)
 
 - Resource Group is a collection of resources that share one or more tags
   - [AWS Resource Groups API](https://docs.aws.amazon.com/ARG/latest/APIReference/Welcome.html)
@@ -448,10 +447,10 @@ AZs are connected with low-latency private links (not public internet)
   - Opening or closing ports to network traffic.
   - Collecting specific log and monitoring data from your fleet of instances.
 
-### IDS/IPS
+## IDS/IPS
 - Promiscuous mode is not allowed. AWS and Hypervisor will not deliver any traffic to instances this is not specifically addressed to the instance
 
-#### Strategies
+### Strategies
 - Host Based Firewall 
   - Forward Deployed IDS where the IDS itself is installed on the instances
   – Traffic Replication where IDS agents installed on instances which send/duplicate the data to a centralized IDS system
@@ -475,7 +474,7 @@ AZs are connected with low-latency private links (not public internet)
   - use CloudWatch
 - Create an IR plan for attacks
 
-### Security & Identity Services - IAM
+## Security & Identity Services - IAM
 - securely control access to AWS services and resources
 - helps create and manage user identities and grant permissions for those users to access AWS resources
 - helps create groups for multiple users with similar permissions
@@ -486,13 +485,13 @@ AZs are connected with low-latency private links (not public internet)
   - all permissions are implicitly denied by default
   - most restrictive policy wins
   
-#### IAM Role
+## IAM Role
 - helps grants and delegate access to users and services without the need of creating permanent credentials
 - IAM users or AWS services can assume a role to obtain temporary security credentials that can be used to make AWS API calls
 - needs Trust policy to define who and Permission policy to define what the user or service can access
 - used with AWS STS (Security Token Service), a lightweight web service that provides temporary, limited privilege credentials for IAM users or for authenticated federated users
 
-#### IAM role scenarios
+### IAM role scenarios
 
 - Service access for e.g. EC2 to access S3 or DynamoDB
 - Cross Account access for users
@@ -504,7 +503,7 @@ AZs are connected with low-latency private links (not public internet)
   - Identity Provider using SAML 2.0, where the user can be authenticated using on premises Active Directory, Open Ldap or any SAML 2.0 compliant IdP using AssumeRoleWithSAML
   - For other Identity Providers, use Identity Broker to authenticate and provide temporary Credentials using AssumeRole (recommended) or GetFederationToken
 
-#### IAM Best Practices
+### IAM Best Practices
 - Do not use Root account for anything other than billing
 - Create Individual IAM users
 - Use groups to assign permissions to IAM users
