@@ -17,11 +17,11 @@
 - Improve through game days
 
 ## The Five Pillars of the Well-Architected Framework
-1) OPS: Operational Excellence
-2) SEC: Security
-3) REL: Reliability
-4) PERF: Performance Efficiency
-5) COST: Cost Optimization
+1. OPS: Operational Excellence
+2. SEC: Security
+3. REL: Reliability
+4. PERF: Performance Efficiency
+5. COST: Cost Optimization
 
 ## 1) OPS: Operational Excellence
 
