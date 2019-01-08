@@ -51,26 +51,27 @@
   - [AWS Trusted Advisor]() - core set of checks that recommend optimizations for your environment
 - Design for Operations
   - [AWS CloudFormation](https://aws.amazon.com/cloudformation/) - create version-controlled templates
-  ![](https://d1.awsstatic.com/CloudFormation%20Assets/howitworks.c316d3856638c6c9786e49011bad660d57687259.png)
+  ![](https://d1.awsstatic.com/CloudFormation%20Assets/howitworks.c316d3856638c6c9786e49011bad660d57687259.png?raw=true)
   - [AWS Developer Tools]() - Set up CI/CD pipelines using: 
     - AWS CodeCommit, AWS CodeBuild, AWS CodePipeline, AWS CodeDeploy, AWS CodeStar
-  ![](https://github.com/nealalan/aws-notes/blob/master/images/d4e2416aad5d988fc47322190319a1d3780478ef.png)
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/d4e2416aad5d988fc47322190319a1d3780478ef.png?raw=true)
   - apply metadata using tags
   - capture logs in Amazon CloudWatch from:
     - AWS CloudTrail, AWS Lambda, VPC Flow Logs, CloudWatch Events, Amazon CloudWatch Logs API
   - use this log information to create a system-wide view of your operational status
     - CloudWatch Dashboards or third-party tools
   - [AWS X-Ray](https://aws.amazon.com/xray/) traces user requests as they travel through your entire application
-  ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram_AWS-X-Ray_how-it-works.2922edd4bfe011e997dbf32fdf8bd520bcbc85fb.png)
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram_AWS-X-Ray_how-it-works.2922edd4bfe011e997dbf32fdf8bd520bcbc85fb.png?raw=true)
 - Operational Readiness
   - use a consistent process (including checklists) to know when you are ready to go live
   - test your procedures, failure scenarios, and the success of your responses (Game Days)
   - create temporary parallel environments, which lowers the risk, effort, and cost of experimentation and testing
   - script procedures on your instances using [AWS Systems Manager](https://aws.amazon.com/systems-manager/) Run Command, Systems Manager Automation, and use AWS Lambda to script responses to events across AWS service 
-  ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram-AWS-Systems-Manager_how-it-works.2e7c5d550e833eed0f49fb8dc1872de23b09d183.png)
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram-AWS-Systems-Manager_how-it-works.2e7c5d550e833eed0f49fb8dc1872de23b09d183.png?raw=true)
   - Automate your responses by triggering these scripts using CloudWatch Events
   - making baselines using [AWS Config](https://aws.amazon.com/config/)
-  ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram-Config_how-it-works.bd28728a9066c55d7ee69c0a655109001462e25b.png)
+  
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram-Config_how-it-works.bd28728a9066c55d7ee69c0a655109001462e25b.png?raw=true)
 
 ### 3 Areas: 2) OPERATE
 - Understanding Operational Health
@@ -80,7 +81,7 @@
     - ingest into Amazon ES (Elasticsearch Service)
     - use the built-in support for Kibana to create dashboards and visualizations of your operational health
   - [Amazon Elastisearch Service](https://aws.amazon.com/elasticsearch-service/) makes it easy to deploy, secure, operate, and scale Elasticsearch for log analytics, and application monitoring.
-  ![](https://github.com/nealalan/aws-notes/blob/master/images/How%20AES%20works_final.2e3ac88fbb9910d7c401d0748556db0c91c97b33.png)
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/How%20AES%20works_final.2e3ac88fbb9910d7c401d0748556db0c91c97b33.png?raw=true)
   - [AWS Personal Health Dashboard](https://aws.amazon.com/premiumsupport/technology/personal-health-dashboard/) provides alerts and remediation guidance **when AWS is experiencing events that may impact you**
   - [AWS Service Health Dashboard](https://status.aws.amazon.com/) provides up-to-the-minute information **on AWS service availability**
 - Responding to Events
@@ -95,7 +96,7 @@
   - third-party systems through the AWS service APIs and SDKs
     - New Relic, Splunk, Loggly, SumoLogic, and Datadog.
   - [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/) / [Amazon CloudWatch Events](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/CWE_GettingStarted.html)
-  ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram_Cloudwatch_v4.55c15d1cc086395cbd5ad279a2f1fc37e8452e77.png)
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram_Cloudwatch_v4.55c15d1cc086395cbd5ad279a2f1fc37e8452e77.png?raw=true)
   - [Amazon SNS](https://aws.amazon.com/sns/)
   ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram_SNS_how-it-works_1.53a464980bf0d5a868b141e9a8b2acf12abc503f.png?raw=true)
   - Auto Scaling for elasticity
