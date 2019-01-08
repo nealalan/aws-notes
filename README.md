@@ -23,7 +23,7 @@
 4. PERF: Performance Efficiency
 5. COST: Cost Optimization
 
-## 1) OPS: Operational Excellence
+## 1) OPS: Operational Excellence ([Whitepaper](https://d1.awsstatic.com/whitepapers/architecture/AWS-Operational-Excellence-Pillar.pdf))
 
 ### Design Principles for Operational Excellence
 - Perform operations as code 
@@ -40,9 +40,7 @@
 - Anticipate failure
 - Learn from all operational failures (lessons learned)
 
-### 3 Areas: Prepare, Operate, Evolve
-
-#### PREPARE
+### 3 Areas: 1) PREPARE
 - Operational Priorities
   - teams need to have a shared understanding of your entire workload, their role in it, and shared business goals 
   - use the resources provided by AWS Support 
@@ -63,7 +61,47 @@
   - use this log information to create a system-wide view of your operational status
     - CloudWatch Dashboards or third-party tools
   - [AWS X-Ray](https://aws.amazon.com/xray/) traces user requests as they travel through your entire application
-  ![](https://github.com/nealalan/aws-notes/blob/master/images/howitworks.c316d3856638c6c9786e49011bad660d57687259.png)
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram_AWS-X-Ray_how-it-works.2922edd4bfe011e997dbf32fdf8bd520bcbc85fb.png)
+- Operational Readiness
+  - use a consistent process (including checklists) to know when you are ready to go live
+  - test your procedures, failure scenarios, and the success of your responses (Game Days)
+  - create temporary parallel environments, which lowers the risk, effort, and cost of experimentation and testing
+  - script procedures on your instances using [AWS Systems Manager](https://aws.amazon.com/systems-manager/) Run Command, Systems Manager Automation, and use AWS Lambda to script responses to events across AWS service 
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram-AWS-Systems-Manager_how-it-works.2e7c5d550e833eed0f49fb8dc1872de23b09d183.png)
+  - Automate your responses by triggering these scripts using CloudWatch Events
+  - making baselines using [AWS Config](https://aws.amazon.com/config/)
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram-Config_how-it-works.bd28728a9066c55d7ee69c0a655109001462e25b.png)
+
+### 3 Areas: 2) OPERATE
+- Understanding Operational Health
+  - implement CloudWatch Dashboards with business and technical viewpoints to make informed decisions
+  - CloudWatch Logs 
+    - define baseline metrics to establish normal operating patterns
+    - ingest into Amazon ES (Elasticsearch Service)
+    - use the built-in support for Kibana to create dashboards and visualizations of your operational health
+  - [Amazon Elastisearch Service](https://aws.amazon.com/elasticsearch-service/) makes it easy to deploy, secure, operate, and scale Elasticsearch for log analytics, and application monitoring.
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/How%20AES%20works_final.2e3ac88fbb9910d7c401d0748556db0c91c97b33.png)
+  - [AWS Personal Health Dashboard](https://aws.amazon.com/premiumsupport/technology/personal-health-dashboard/) provides alerts and remediation guidance **when AWS is experiencing events that may impact you**
+  - [AWS Service Health Dashboard](https://status.aws.amazon.com/) provides up-to-the-minute information **on AWS service availability**
+- Responding to Events
+  - anticipate operational events, both planned (for example, sales promotions, deployments, and failure tests) and unplanned (for example, surges in utilization and component failures)
+  - automate the execution of runbook and playbook actions on AWS.
+  - create CloudWatch rules to trigger responses through CloudWatch targets:
+    - Lambda functions, Amazon SNS topics, Amazon EC2 ECS tasks, AWS Systems Manager Automation
+  - create CloudWatch alarms to perform one or more actions:
+    - Amazon EC2 actions, Auto Scaling actions, send a notification to an Amazon SNS topic. 
+    - custom actions in response to an alarm, invoke Lambda through Amazon SNS notification. 
+    - Use Amazon SNS to publish event notifications and escalation messages to keep people informed
+  - third-party systems through the AWS service APIs and SDKs
+    - New Relic, Splunk, Loggly, SumoLogic, and Datadog.
+  - [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/) / [Amazon CloudWatch Events](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/CWE_GettingStarted.html)
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram_Cloudwatch_v4.55c15d1cc086395cbd5ad279a2f1fc37e8452e77.png)
+  - [Amazon SNS](https://aws.amazon.com/sns/)
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram_SNS_how-it-works_1.53a464980bf0d5a868b141e9a8b2acf12abc503f.png?raw=true)
+  - Auto Scaling for elasticity
+
+
+### 3 Areas: 3) 
 
 ### Best Practices 
 - OPS 1: What factors drive your operational priorities?
