@@ -26,16 +26,48 @@
 ## 1) OPS: Operational Excellence
 
 ### Design Principles for Operational Excellence
-- Perform operations as code - limit human error and enable consistent responses to events
+- Perform operations as code 
+  - limit human error and enable consistent responses to events
+  - define your entire workload (applications, infrastructure, etc.) as code and update it with code
 - Annotate documentation
+  - Annotated documentation can be used by humans and systems
+  - Use annotations as an input to your operations code.
 - Make frequent, small, reversible changes
+  - Design workloads to allow components to be updated regularly to increase the flow of beneficial changes into your workload
+  - Make changes in small increments that can be reversed if they fail to aid in the identification and resolution of issues 
 - Refine operations procedures frequently
+  - As you evolve your workload, evolve your procedures appropriately
 - Anticipate failure
-- Learn from all operational failures
+- Learn from all operational failures (lessons learned)
 
-### Best Practices - Prepare, Operate, Evolve
+### 3 Areas: Prepare, Operate, Evolve
+
+#### PREPARE
+- Operational Priorities
+  - teams need to have a shared understanding of your entire workload, their role in it, and shared business goals 
+  - use the resources provided by AWS Support 
+  - [AWS Knowledge Center](https://aws.amazon.com/premiumsupport/knowledge-center/)
+  - [AWS Discussion Forms](https://forums.aws.amazon.com/)
+  - [AWS Support Center](https://console.aws.amazon.com/support/home)
+  - [AWS Cloud Compliance](https://aws.amazon.com/compliance/) - regulatory or compliance requirements 
+  - [AWS Trusted Advisor]() - core set of checks that recommend optimizations for your environment
+- Design for Operations
+  - [AWS CloudFormation](https://aws.amazon.com/cloudformation/) - create version-controlled templates
+  ![](https://d1.awsstatic.com/CloudFormation%20Assets/howitworks.c316d3856638c6c9786e49011bad660d57687259.png)
+  - [AWS Developer Tools]() - Set up CI/CD pipelines using: 
+    - AWS CodeCommit, AWS CodeBuild, AWS CodePipeline, AWS CodeDeploy, AWS CodeStar
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/d4e2416aad5d988fc47322190319a1d3780478ef.png)
+  - apply metadata using tags
+  - capture logs in Amazon CloudWatch from:
+    - AWS CloudTrail, AWS Lambda, VPC Flow Logs, CloudWatch Events, Amazon CloudWatch Logs API
+  - use this log information to create a system-wide view of your operational status
+    - CloudWatch Dashboards or third-party tools
+  - [AWS X-Ray](https://aws.amazon.com/xray/) traces user requests as they travel through your entire application
+  ![](https://github.com/nealalan/aws-notes/blob/master/images/howitworks.c316d3856638c6c9786e49011bad660d57687259.png)
+
+### Best Practices 
 - OPS 1: What factors drive your operational priorities?
-  - Evaluate Business neets
+  - Evaluate Business needs
   - Evaluate compliance requirements
   - Evaluate risk
 - OPS 2: How do you design your workload to enable operability?
@@ -79,8 +111,12 @@
   - Document and share lessons learned
   - Perform ops metrics reviews
 
-#### Key Services
-- AWS CloudFormation = essential to Ops Excellence
+### Key Services
+- [AWS CloudFormation](https://aws.amazon.com/cloudformation/) = essential to Ops Excellence
+- Amazon QuickSight is a business analytics service that makes it easy to build visualizations, perform ad-hoc analysis, and quickly get insights from your data.
+- Amazon Athena is a serverless interactive query service that makes it easy to analyze data in Amazon S3
+- Amazon S3 can be used for collection and archival retention of logs
+- Amazon CloudWatch is used for the collection of logs and metrics and the creation of dashboards.
 
 ## 2) SEC: Security
 
