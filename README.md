@@ -801,7 +801,7 @@ AZs are connected with low-latency private links (not public internet)
 - Geolocation routing – Specify geographic locations by continent, country, state limited to US, is based on IP accuracy
 - Failover routing – failover to a backup site if the primary site fails and becomes unreachable
 
-## Compute EC2
+## Compute: EC2
 
 - provides scalable computing capacity
 - Virtualization for EC2 is run using the Xen Hypervisor software
@@ -876,9 +876,126 @@ Static IP addresses (Elastic IP addresses)
 - for capacity errors, stop and start the instances in the placement group
 - use homogenous instance types which support enhanced networking and launch all the instances at once
 
+## Compute: Load Balancing and Auto Scaling
+
+- Auto Scaling & ELB can be used for High Availability and Redundancy by spanning Auto Scaling groups across multiple AZs within a region and then setting up ELB to distribute incoming traffic across those AZs
+- With Auto Scaling use ELB health check with the instances to ensure that traffic is routed only to the healthy instances
+
+
 ## AWS ELB (Elastic Load Balancer)
 
+- Managed load balancing service and scales automatically
+- distributes incoming application traffic across multiple EC2 instances
+- is distributed system that is fault tolerant and actively monitored by AWS scales it as per the demand
+- are engineered to not be a single point of failure
+- need to Pre Warm ELB if the demand is expected to shoot especially during load testing
+- supports routing traffic to instances in multiple AZs in the same region
+- performs Health Checks to route traffic only to the healthy instances
+- support Listeners with HTTP, HTTPS, SSL, TCP protocols
+- has an associated IPv4 and dual stack DNS name
+- can offload the work of encryption and decryption (SSL termination) so that the EC2 instances can focus on their main work
+- supports Cross Zone load balancing to help route traffic evenly across all EC2 instances regardless of the AZs they reside in
+- to help identify the IP address of a client
+  - supports Proxy Protocol header for TCP/SSL connections
+  - supports X-Forward headers for HTTP/HTTPS connections
+- supports Stick Sessions (session affinity) to bind a user’s session to a specific application instance,
+  - it is not fault tolerant, if an instance is lost the information is lost
+  - requires HTTP/HTTPS listener and does not work with TCP
+  - requires SSL termination on ELB as it users the headers
+- supports Connection draining to help complete the in-flight requests in case an instance is deregistered
+- For High Availability - recommended to attach one subnet per AZ for at least two AZs, even if the instances are in a single subnet.
+- cannot assign an Elastic IP address to an ELB
+- IPv4 & IPv6 support however VPC does not support IPv6. VPC now supports IPV6.
+- HTTPS listener does not support Client Side Certificate
+- for SSL termination at backend instances or support for Client Side Certificate use TCP for connections from the client to the ELB, use the SSL protocol for connections from the ELB to the back-end application, and deploy certificates on the back-end instances handling requests
+- supports a single SSL certificate, so for multiple SSL certificate multiple ELBs need to be created
 
+## Auto Scaling
+
+- ensures correct number of EC2 instances are always running to handle the load by scaling up or down automatically as demand changes
+- cannot span multiple regions.
+- attempts to distribute instances evenly between the AZs that are enabled for the Auto Scaling group
+- performs checks either using EC2 status checks or can use ELB health checks to determine the health of an instance and terminates the instance if unhealthy, to launch a new instance
+- can be scaled using manual scaling, scheduled scaling or demand based scaling
+- cooldown period helps ensure instances are not launched or terminated before the previous scaling activity takes effect to allow the newly launched instances to start handling traffic and reduce load
+
+## EC2 Auto Scaling Groups
+
+- EC2 instances are organized into groups so that they can be treated as a logical unit for the purposes of scaling and management
+- you can specify its minimum, maximum, and, desired number of EC2 instances
+- groups uses a launch configuration as a template for its EC2 instances. 
+- When you create a launch configuration, you can specify information such as the AMI ID, instance type, key pair, security groups, and block device mapping for your instance
+
+## EC2 Load Balancer (Classic Load Balancing)
+
+- Internet-facing load balancer 
+  - has a publicly resolvable DNS name, so it can route requests from clients over the Internet to the EC2 instances that are registered with the load balancer.
+  - created INSIDE a PUBLIC SUBNET
+  - Configure health checks, and Register back-end instances
+  - Configure a listener by specifying a protocol and a port for front-end (client to load balancer) connections, and a protocol and a port for back-end (load balancer to back-end instances) connections
+- Internal load balancer 
+  - has only private IP addresses. 
+  - The DNS name of an internal load balancer is publicly resolvable to the private IP addresses of the nodes
+  - When an internal load balancer is created, it receives a public DNS name with the following form: internal-name-123456789.region.elb.amazonaws.com
+
+## AWS EBS (Elastic Block Store)
+
+- is virtual network attached block storage
+- volumes CANNOT be shared with multiple EC2 instances, use EFS instead
+- persists and is independent of EC2 lifecycle
+- multiple volumes can be attached to a single EC2 instance
+- can be detached & attached to another EC2 instance in that same AZ only
+- volumes are created in an specific AZ and CANNOT span across AZs
+- snapshots CANNOT span across regions
+- for making volume available to different AZ, create a snapshot of the volume and restore it to a new volume in any AZ within the region
+- for making the volume available to different Region, the snapshot of the volume can be copied to a different region and restored as a volume
+- provides high durability and are redundant in an AZ, as the data is automatically replicated within that AZ to prevent data loss due to any single hardware component failure
+- PIOPS is designed to run transactions applications that require high and consistent IO for e.g. Relation database, NoSQL etc
+
+## S3 
+
+- Key-value based object storage with unlimited storage, unlimited objects up to 5 TB for the internet
+- is an Object level storage (not a Block level storage) and cannot be used to host OS or dynamic websites 
+- provides durability by redundantly storing objects on multiple facilities within a region
+- support SSL encryption of data in transit and data encryption at rest
+- regularly verifies the integrity of data using checksums and provides auto healing capability
+- integrates with CloudTrail, CloudWatch and SNS for event notifications
+
+### S3 resources
+
+- consists of bucket and objects stored in the bucket which can be retrieved via a unique, developer-assigned key
+- bucket names are globally unique
+- data model is a flat structure with no hierarchies or folders
+- Logical hierarchy can be inferred using the keyname prefix e.g. Folder1/Object1
+
+### S3 Bucket & Object Operations
+
+- allows retrieval of 1000 objects and provides pagination support and is NOT suited for list or prefix queries with large number of objects
+- with a single put operations, 5GB size object can be uploaded
+- use Multipart upload to upload large objects up to 5 TB and is recommended for object size of over 100MB for fault tolerant uploads
+- support Range HTTP Header to retrieve partial objects for fault tolerant downloads where the network connectivity is poor
+- Pre-Signed URLs can also be used shared for uploading/downloading objects for limited time without requiring AWS security credentials
+- allows deletion of a single object or multiple objects (max 1000) in a single call
+
+### S3 Multipart Uploads allows
+
+- parallel uploads with improved throughput and bandwidth utilization
+- fault tolerance and quick recovery from network issues
+- ability to pause and resume uploads
+- begin an upload before the final object size is known
+
+### S3 Versioning 
+
+- allows preserve, retrieve, and restore every version of every object
+- protects individual files but does NOT protect from Bucket deletion
+
+### S3 Storage tiers
+
+- Standard
+  - default storage class
+  - 99.999999999% durability & 99.99% availability
+  - Low latency and high throughput performance
+  - designed to sustain the loss of data in a two facilities
 
 
 
