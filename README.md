@@ -555,6 +555,7 @@ AZs are connected with low-latency private links (not public internet)
 - Create an IR plan for attacks
 
 ## Security & Identity Services - IAM
+
 - securely control access to AWS services and resources
 - helps create and manage user identities and grant permissions for those users to access AWS resources
 - helps create groups for multiple users with similar permissions
@@ -566,12 +567,14 @@ AZs are connected with low-latency private links (not public internet)
   - most restrictive policy wins
   
 ## IAM Role
+
 - helps grants and delegate access to users and services without the need of creating permanent credentials
 - IAM users or AWS services can assume a role to obtain temporary security credentials that can be used to make AWS API calls
 - needs Trust policy to define who and Permission policy to define what the user or service can access
 - used with AWS STS (Security Token Service), a lightweight web service that provides temporary, limited privilege credentials for IAM users or for authenticated federated users
 
 ### IAM role scenarios
+
 - Service access for e.g. EC2 to access S3 or DynamoDB
 - Cross Account access for users
   - with user within the same account
@@ -583,6 +586,7 @@ AZs are connected with low-latency private links (not public internet)
   - For other Identity Providers, use Identity Broker to authenticate and provide temporary Credentials using AssumeRole (recommended) or GetFederationToken
 
 ## IAM Best Practices
+
 - Do not use Root account for anything other than billing
 - Create Individual IAM users
 - Use groups to assign permissions to IAM users
@@ -596,6 +600,7 @@ AZs are connected with low-latency private links (not public internet)
 - Remove all unused users and credentials
 
 ## Security & Identity Services - [CloudHSM](https://aws.amazon.com/cloudhsm/)
+
 - provides secure cryptographic key storage to customers by making hardware security modules (HSMs)
 - single tenant, dedicated physical device to securely generate, store, and manage cryptographic keys used for data encryption
 - inside the VPC (not EC2-classic) & isolated from the rest of the network
@@ -606,13 +611,14 @@ AZs are connected with low-latency private links (not public internet)
 - expensive, prefer AWS Key Management Service (KMS) if cost is a criteria
 
 ## [AWS Directory Services](https://aws.amazon.com/directoryservice/)
+
 - **Managed Microsoft Active Directory in the AWS Cloud**
 - gives applications in AWS access to Active Directory services
 - different from SAML + AD - where the access is granted to AWS services through Temporary Credentials
-
 ![](https://d1.awsstatic.com/Products/product-name/diagrams/directory_service_howitworks.80bfccbf2f5d1d63558ec3c086aff247147258f1.png)
 
 ## AWS Directory Services: Benefits
+
 - EASILY MIGRATE DIRECTORY-AWARE, ON-PREMISES WORKLOADS
 - USE ACTUAL MICROSOFT ACTIVE DIRECTORY
 - SHARE A SINGLE DIRECTORY FOR CLOUD WORKLOADS
@@ -621,6 +627,7 @@ AZs are connected with low-latency private links (not public internet)
 - SIMPLIFY ADMINISTRATION WITH A MANAGED SERVICE
 
 ## AWS Directory Services: [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html)
+
 - least expensive but does not support Microsoft AD advance features
 - provides a Samba 4 Microsoft Active Directory compatible standalone directory service on AWS
 - No single point of Authentication or Authorization, as a separate copy is maintained
@@ -628,6 +635,7 @@ AZs are connected with low-latency private links (not public internet)
 - Don’t use it, if the requirement is to leverage access and control through centralized authentication service
 
 ## AWS Directory Services: [AD Connector](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_ad_connector.html)
+
 - acts as a hosted proxy service for cloud instances to connect to on-premises Active Directory
 - enables consistent enforcement (between cloud and on-prem) of existing security policies, such as:
   - password expiration
@@ -638,30 +646,36 @@ AZs are connected with low-latency private links (not public internet)
 - does not cache data - **might lead to latency**
 
 ## AWS Directory Services: Read-only Domain Controllers (RODCs)
+
 - works out as a Read-only Active Directory
 - holds a copy of the Active Directory Domain Service (AD DS) database and respond to authentication requests
 - cannot be written to and are typically deployed in locations where physical security cannot be guaranteed
 - helps maintain a single point to authentication & authorization controls, however needs to be synced
 
 ## AWS Directory Services: Writable Domain Controllers
+
 - are expensive to setup
 - operate in a multi-master model
 - changes can be made on any writable server in the forest, and those changes are replicated to servers throughout the entire forest
 
 ## AWS WAF (Web Application Firewall)
+
 - helps monitor the HTTP/HTTPS requests forwarded to CloudFront and allows controlling access to the content.
 - helps define Web ACLs, which is a combination of Rules, which is a combinations of Conditions and Action to block or allow
 
 ## Third Party WAF
+
 - act as filters that apply a set of rules to web traffic to cover exploits like XSS and SQL injection and also help build resiliency against DDoS by mitigating HTTP GET or POST floods
 - provides a lot of features like OWASP Top 10, HTTP rate limiting, Whitelist or blacklist, inspect and identify requests with abnormal patterns, CAPTCHA etc
 - a WAF sandwich pattern can be implemented where an autoscaled WAF sits between the Internet and Internal Load Balancer
 
 ## [VPC](https://aws.amazon.com/vpc/) (Virtual Private Cloud)
+
 - helps define a logically isolated dedicated virtual network within the AWS
 - provides control of IP addressing using CIDR block from a minimum of /28 to maximum of /16 block size
 
 ## VPC Components
+
 - Internet gateway (IGW) provides access to the Internet
 - Virtual gateway (VGW) provides access to on-premises data center through VPN and Direct Connect connections
 - VPC can have only one IGW and VGW
@@ -674,18 +688,21 @@ AZs are connected with low-latency private links (not public internet)
 - Flow logs capture information about IP traffic going to and from network interfaces in your VPC
 
 ## VPC NAT (Network Address Translation)
+
 - allows internet access to instances in private subnet
 - performs the function of both address translation and port address translation (PAT)
 - needs source/destination check flag to be disabled as it is not actual destination of  the traffic
 - NAT gateway is a AWS managed NAT service that provides better availability, higher bandwidth, and requires less administrative effort
 
-## VPC Route Tables
+## [VPC Route Tables](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html)
+
 - defines rules, termed as routes, which determine where network traffic from the subnet would be routed
 - Each VPC has a Main Route table, and can have multiple custom route tables created
 - Every route table contains a local route that enables communication within a VPC which cannot be modified or deleted
 - **Route priority is decided by matching the most specific route in the route table that matches the traffic**
 
 ## VPC Subnets
+
 - map to AZs and do not span across AZs
 - have a CIDR range that is a portion of the whole VPC.
 - CIDR ranges cannot overlap between subnets within the VPC.
@@ -696,6 +713,7 @@ AZs are connected with low-latency private links (not public internet)
 - **Protected subnets** – no outbound connectivity and used for regulated workloads
 
 ## VPC ENI (Elastic Network Interface)
+
 - default ENI, eth0, is attached to an instance (which cannot be detached) with one or more secondary detachable ENIs (eth1-ethn)
 - has primary private, one or more secondary private, public, Elastic IP address, security groups, MAC address and source/destination check flag attributes associated
 - An ENI in one subnet can be attached to an instance in the same or another subnet, in the same AZ and the same VPC
@@ -704,19 +722,164 @@ AZs are connected with low-latency private links (not public internet)
 
 ## VPC Security Groups vs Network Access Control Lists
 
-| Security Groups | Network AC:s |
-|--------------------------|-----------------------------|
+| Security Groups | Network ACLs |
+|---------------|-----------------|
 | Stateful | Statless |
 | Instance level | Subnet level |
-| Only allows ALLOW rules | Both Allot and Deny rules |
+| Only allows ALLOW rules | Both Allow and Deny rules |
 | Evaluates as a whole | Evaluated in defined order |
 
-## VPC EIP (Elastic IPs)
+## [VPC EIP](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html) (Elastic IPs)
+
+- is a static IP address designed for dynamic cloud computing.
+- is associated with AWS account, and not a particular instance
+- can be remapped from one instance to an other instance
+- is charged for non usage, if not linked for any instance or instance associated is in stopped state
+- charged if more than one assigned to an instance
+
+## [VPC Peering](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-peering.html)
+
+- allows routing of traffic between the peer VPCs using private IP addresses and no IGW or VGW required
+- No single point of failure and bandwidth bottlenecks
+- VPC peering across regions is now supported (as of 2017-11)
+- IP space or CIDR blocks cannot overlap
+- cannot be transitive, one-to-one relationship between two VPC
+- Only one between any two VPCs and have to be explicitly peered
+- Private DNS values cannot be resolved
+- Security groups from peered VPC cannot be referred for ingress and egress rules in security group, use CIDR block instead
+
+### [VPC Endpoints](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html)
+
+- enables creation of a private connection between VPC and another AWS service using its private IP address
+- does not require a public IP address, access over the Internet, NAT device, a VPN connection or AWS Direct Connect
+- traffic between VPC & AWS service does not leave the Amazon network
+- **interface endpoint** is an elastic network interface with a private IP address that serves as an entry point for traffic destined to a supported service
+- **gateway endpoint** is a gateway that is a target for a specified route in your route table, used for traffic destined to a supported AWS service
 
 
-## Tenancy option for instances
-- shared, by default, allows instances to be launched on shared tenancy
-- dedicated allows instances to be launched on a dedicated hardware
+## Direct Connect
+
+- network service that provides an alternative to using Internet to utilize AWS services by using private dedicated network connection
+- provides Virtual Interfaces
+- Private VIF to access instances within an VPC via VGW
+- Public VIF to access non VPC services
+- requires time to setup probably months, and should not be considered as an option if turnaround time is less
+- does not provide redundancy, use either second direct connection or IPSec VPN connection
+- Virtual Private Gateway is on the AWS side and Customer Gateway is on the Customer side
+- route propagation is enabled on VGW and not on CGW
+
+## VPN
+
+- provide secure IPSec connections from on-premise computers or services to AWS over the Internet
+- is quick to setup, is cheap however it depends on the Internet speed
+
+| Direct Connect | VPN IPSec
+|--|--|
+| Expensive to Setup and Takes time | Cheap & Immediate |
+| Dedicated private connections | Internet |
+| Reduced data transfer rate | Internet data transfer cost |
+| Consistent performance | Internet inherent variability |
+| Do not provide Redundancy | Provides Redundancy |
+
+## Route 53
+
+- Highly available and scalable DNS & Domain Registration Service
+- Reliable and cost-effective way to route end users to Internet applications
+- Supports multi-region and backup architectures for High availability. ELB , limited to region, does not support multi region HA architecture
+- supports private Intranet facing DNS service
+- internal resource record sets only work for requests originating from within the VPC and currently cannot extend to on-premise
+- Global propagation of any changes made to the DN records within ~ 1min
+- Route 53 to create an alias resource record set that points to ELB, S3, CloudFront. An alias resource record set is an Route 53 extension to DNS. It’s similar to a CNAME resource record set, but supports both for root domain – zone apex  e.g. example.com, and for subdomains for e.g. www.example.com.
+- CNAME resource record sets can be created only for subdomains and cannot be mapped to the zone apex record
+- Weighted, Latency and Geolocation can be used for Active-Active while Failover routing can be used for Active-Passive multi region architecture
+
+## Route 53 [Routing Policy](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html)
+
+- Simple routing – simple round robin policy
+- Weighted round robin – assign weights to resource records sets to specify the proportion for e.g. 80%:20%
+- Latency based routing – helps improve global applications as request are sent to server from the location with minimal latency, is based on the latency and cannot guarantee users from the same geographic will be served from the same location for any compliance reasons
+- Geolocation routing – Specify geographic locations by continent, country, state limited to US, is based on IP accuracy
+- Failover routing – failover to a backup site if the primary site fails and becomes unreachable
+
+## Compute EC2
+
+- provides scalable computing capacity
+- Virtualization for EC2 is run using the Xen Hypervisor software
+
+## EC2 Features
+
+- Virtual computing environments, known as EC2 instances
+- Preconfigured templates for EC2 instances, known as Amazon Machine Images (AMIs), that package the bits needed for the server (including the operating system and additional software)
+- Various configurations of CPU, memory, storage, and networking capacity for your instances, known as Instance types
+- Secure login information for your instances using key pairs (public-private keys where private is kept by user)
+- Storage volumes for temporary data that’s deleted when you stop or terminate your instance, known as Instance store volumes
+- Persistent storage volumes for data using Elastic Block Store (EBS)
+- Multiple physical locations for your resources, such as instances and EBS volumes, known as Regions and Availability Zones
+- A firewall to specify the protocols, ports, and source IP ranges that can reach your instances using Security Groups
+Static IP addresses (Elastic IP addresses)
+- Metadata, known as tags, can be created and assigned to EC2 resources
+- Virtual networks that are logically isolated from the rest of the AWS cloud, and can optionally connect to on premises network, known as Virtual private clouds (VPCs)
+
+## EC2 AMIs (Amazon Machine Images)
+
+- template from which EC2 instances can be launched quickly
+- does NOT span across across regions, and needs to be copied
+- can be shared with other specific AWS accounts or made public
+
+## EC2 Purchasing Options
+
+- Dedicated Instances - tenancy option which enables instances to run in VPC on hardware that’s isolated, dedicated to a single customer
+- Light, Medium, and Heavy Utilization Reserved Instances are no longer available for purchase and were part of the Previous Generation AWS EC2 purchasing model
+
+#### On-Demand Instances
+
+- pay for instances and compute capacity that you use by the hour
+- with no long-term commitments or up-front payments
+
+#### Reserved Instances
+
+1) Applications have steady state or predictable usage
+2) Applications that require reserved capacity
+3) Users able to make upfront payments to reduce their total computing cost even further - Buy when you know what you will need for the next 12+ months
+
+- provides lower hourly running costs by providing a billing discount
+- capacity reservation that is applied to instances
+- suited if consistent, heavy, predictable usage
+- provides benefits with Consolidate Billing
+- can be modified to switch Availability Zones or the instance size within the same instance type, given the instance size footprint (Normalization factor) remains the same
+- pay for the entire term regardless of the usage, so if the question targets cost effective solution and answer mentions reserved instances are purchased & unused, it can be ignored
+
+#### Spot Instances
+
+- cost-effective choice but does NOT guarantee availability
+- applications flexible in the timing when they can run and also able to handle interruption by storing the state externally
+- AWS will give a two minute warning if the instance is to be terminated to save any unsaved work
+
+## EC2 Enhanced Networking
+
+- results in higher bandwidth, higher packet per second (PPS) performance, lower latency, consistency, scalability and lower jitter
+- supported using Single Root I/O Virtualization (SR-IOV) only on supported instance types
+- is supported only with an VPC (not EC2 Classic), HVM virtualization type and available by default on Amazon AMI but can be installed on other AMIs as well
+
+## EC2 Placement Group
+
+1. A placement group is a logical grouping of instances within a single availability zone
+2. Using placement groups enables applications to participate in a low latency, 10 Gbps network
+3. Placement Groups are recommended for applications that benefit from low network latency, high network throughput, or both
+
+- provide low latency, High Performance Computing via 10Gbps network
+- is a logical grouping on instances within a Single AZ
+- don’t span availability zones, can span multiple subnets but subnets must be in the same AZ
+- NOTE – Spread Placement Groups can span multiple AZs.
+- can span across peered VPCs for the same Availability Zones
+- existing instances cannot be moved into an existing placement group
+- for capacity errors, stop and start the instances in the placement group
+- use homogenous instance types which support enhanced networking and launch all the instances at once
+
+## AWS ELB (Elastic Load Balancer)
+
+
+
 
 
 [[EDIT](https://github.com/nealalan/aws-notes/edit/master/README.md)]
