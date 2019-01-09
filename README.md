@@ -703,7 +703,7 @@ AZs are connected with low-latency private links (not public internet)
 - with pre allocated Mac Address can be used for applications with special licensing requirements
 
 ## VPC Security Groups vs Network Access Control Lists
-
+|--------------------------|-----------------------------|
 | Stateful | Statless |
 | Instance level | Subnet level |
 | Only allows ALLOW rules | Both Allot and Deny rules |
