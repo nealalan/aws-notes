@@ -70,7 +70,6 @@
   ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram-AWS-Systems-Manager_how-it-works.2e7c5d550e833eed0f49fb8dc1872de23b09d183.png?raw=true)
   - Automate your responses by triggering these scripts using CloudWatch Events
   - making baselines using [AWS Config](https://aws.amazon.com/config/)
-  
   ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram-Config_how-it-works.bd28728a9066c55d7ee69c0a655109001462e25b.png?raw=true)
 
 ### 3 Areas: 2) OPERATE
@@ -95,15 +94,24 @@
     - Use Amazon SNS to publish event notifications and escalation messages to keep people informed
   - third-party systems through the AWS service APIs and SDKs
     - New Relic, Splunk, Loggly, SumoLogic, and Datadog.
+  - Amazon Elastisearch Service
   - [Amazon CloudWatch](https://aws.amazon.com/cloudwatch/) / [Amazon CloudWatch Events](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/CWE_GettingStarted.html)
   ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram_Cloudwatch_v4.55c15d1cc086395cbd5ad279a2f1fc37e8452e77.png?raw=true)
   - [Amazon SNS](https://aws.amazon.com/sns/)
   ![](https://github.com/nealalan/aws-notes/blob/master/images/product-page-diagram_SNS_how-it-works_1.53a464980bf0d5a868b141e9a8b2acf12abc503f.png?raw=true)
   - Auto Scaling for elasticity
 
-
-### 3 Areas: 3) 
-
+### 3 Areas: 3) EVOLVE
+- Learning from Experience
+  - Amazon QuickSight is a business analytics service that makes it easy to build visualizations, perform ad-hoc analysis, and quickly get insights from your data
+  - Amazon Athena is a serverless interactive query service that makes it easy to analyze data in Amazon S3
+  - Amazon CloudWatch is used for the collection of logs and metrics and the creation of dashboards
+- Share Learnings
+  - AWS IAM - enables you to manage the sharing of resources within and across accounts
+  - AWS CodeCommit provides a version-controlled repository for your operations as code
+  - AWS Lambda enables the definition of operational procedures as code that can be shared across accounts
+  - Amazon Machine Images (AMIs) are predefined operating system templates
+  
 ### Best Practices 
 - OPS 1: What factors drive your operational priorities?
   - Evaluate Business needs
@@ -522,14 +530,14 @@ AZs are connected with low-latency private links (not public internet)
 ## IDS/IPS
 - Promiscuous mode is not allowed. AWS and Hypervisor will not deliver any traffic to instances this is not specifically addressed to the instance
 
-### Strategies
+### IDS/IPS: Strategies
 - Host Based Firewall 
   - Forward Deployed IDS where the IDS itself is installed on the instances
   – Traffic Replication where IDS agents installed on instances which send/duplicate the data to a centralized IDS system
 - In-Line Firewall 
   – Inbound IDS/IPS Tier (like a WAF configuration) which identifies and drops suspect packets
 
-### DDOS Mitigation
+### IDS/IPS: DDOS Mitigation
 - Minimize the Attack surface
   - Use AWS ELB, AWS CloudFront, and AWS Route 53 to distribute load
   - maintain resources in private subnets and use Bastion servers
@@ -574,7 +582,7 @@ AZs are connected with low-latency private links (not public internet)
   - Identity Provider using SAML 2.0, where the user can be authenticated using on premises Active Directory, Open Ldap or any SAML 2.0 compliant IdP using AssumeRoleWithSAML
   - For other Identity Providers, use Identity Broker to authenticate and provide temporary Credentials using AssumeRole (recommended) or GetFederationToken
 
-### IAM Best Practices
+## IAM Best Practices
 - Do not use Root account for anything other than billing
 - Create Individual IAM users
 - Use groups to assign permissions to IAM users
@@ -587,7 +595,7 @@ AZs are connected with low-latency private links (not public internet)
 - Enforce a strong IAM password policy for IAM users
 - Remove all unused users and credentials
 
-### Security & Identity Services - [CloudHSM](https://aws.amazon.com/cloudhsm/)
+## Security & Identity Services - [CloudHSM](https://aws.amazon.com/cloudhsm/)
 - provides secure cryptographic key storage to customers by making hardware security modules (HSMs)
 - single tenant, dedicated physical device to securely generate, store, and manage cryptographic keys used for data encryption
 - inside the VPC (not EC2-classic) & isolated from the rest of the network
@@ -597,14 +605,14 @@ AZs are connected with low-latency private links (not public internet)
 - **NOT fault tolerant** and would need to build a cluster - if one fails all the keys are lost
 - expensive, prefer AWS Key Management Service (KMS) if cost is a criteria
 
-### [AWS Directory Services](https://aws.amazon.com/directoryservice/)
+## [AWS Directory Services](https://aws.amazon.com/directoryservice/)
 - **Managed Microsoft Active Directory in the AWS Cloud**
 - gives applications in AWS access to Active Directory services
 - different from SAML + AD - where the access is granted to AWS services through Temporary Credentials
 
 ![](https://d1.awsstatic.com/Products/product-name/diagrams/directory_service_howitworks.80bfccbf2f5d1d63558ec3c086aff247147258f1.png)
 
-#### Benefits
+## AWS Directory Services: Benefits
 - EASILY MIGRATE DIRECTORY-AWARE, ON-PREMISES WORKLOADS
 - USE ACTUAL MICROSOFT ACTIVE DIRECTORY
 - SHARE A SINGLE DIRECTORY FOR CLOUD WORKLOADS
@@ -612,14 +620,14 @@ AZs are connected with low-latency private links (not public internet)
 - CENTRALLY MANAGE APPLICATION ACCESS AND DEVICES IN THE AWS CLOUD
 - SIMPLIFY ADMINISTRATION WITH A MANAGED SERVICE
 
-#### [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html)
+## AWS Directory Services: [Simple AD](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html)
 - least expensive but does not support Microsoft AD advance features
 - provides a Samba 4 Microsoft Active Directory compatible standalone directory service on AWS
 - No single point of Authentication or Authorization, as a separate copy is maintained
 - trust relationships cannot be setup between Simple AD and other Active Directory domains
 - Don’t use it, if the requirement is to leverage access and control through centralized authentication service
 
-#### [AD Connector](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_ad_connector.html)
+## AWS Directory Services: [AD Connector](https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_ad_connector.html)
 - acts as a hosted proxy service for cloud instances to connect to on-premises Active Directory
 - enables consistent enforcement (between cloud and on-prem) of existing security policies, such as:
   - password expiration
@@ -629,10 +637,84 @@ AZs are connected with low-latency private links (not public internet)
 - enable MFA by integrating with existing RADIUS-based MFA solutions 
 - does not cache data - **might lead to latency**
 
-#### Read-only Domain Controllers (RODCs)
+## AWS Directory Services: Read-only Domain Controllers (RODCs)
+- works out as a Read-only Active Directory
+- holds a copy of the Active Directory Domain Service (AD DS) database and respond to authentication requests
+- cannot be written to and are typically deployed in locations where physical security cannot be guaranteed
+- helps maintain a single point to authentication & authorization controls, however needs to be synced
+
+## AWS Directory Services: Writable Domain Controllers
+- are expensive to setup
+- operate in a multi-master model
+- changes can be made on any writable server in the forest, and those changes are replicated to servers throughout the entire forest
+
+## AWS WAF (Web Application Firewall)
+- helps monitor the HTTP/HTTPS requests forwarded to CloudFront and allows controlling access to the content.
+- helps define Web ACLs, which is a combination of Rules, which is a combinations of Conditions and Action to block or allow
+
+## Third Party WAF
+- act as filters that apply a set of rules to web traffic to cover exploits like XSS and SQL injection and also help build resiliency against DDoS by mitigating HTTP GET or POST floods
+- provides a lot of features like OWASP Top 10, HTTP rate limiting, Whitelist or blacklist, inspect and identify requests with abnormal patterns, CAPTCHA etc
+- a WAF sandwich pattern can be implemented where an autoscaled WAF sits between the Internet and Internal Load Balancer
+
+## [VPC](https://aws.amazon.com/vpc/) (Virtual Private Cloud)
+- helps define a logically isolated dedicated virtual network within the AWS
+- provides control of IP addressing using CIDR block from a minimum of /28 to maximum of /16 block size
+
+## VPC Components
+- Internet gateway (IGW) provides access to the Internet
+- Virtual gateway (VGW) provides access to on-premises data center through VPN and Direct Connect connections
+- VPC can have only one IGW and VGW
+- Route tables determine where network traffic from subnet is directed
+- Ability to create subnet with VPC CIDR block
+- Network Address Translation (NAT) server provides outbound Internet access for EC2 instances in private subnets
+- Elastic IP addresses are static, persistent public IP addresses
+- Instances launched in the VPC always have a Private IP and can have a Public or a Elastic IP address associated 
+- Security Groups and NACLs help define security
+- Flow logs capture information about IP traffic going to and from network interfaces in your VPC
+
+## VPC NAT (Network Address Translation)
+- allows internet access to instances in private subnet
+- performs the function of both address translation and port address translation (PAT)
+- needs source/destination check flag to be disabled as it is not actual destination of  the traffic
+- NAT gateway is a AWS managed NAT service that provides better availability, higher bandwidth, and requires less administrative effort
+
+## VPC Route Tables
+- defines rules, termed as routes, which determine where network traffic from the subnet would be routed
+- Each VPC has a Main Route table, and can have multiple custom route tables created
+- Every route table contains a local route that enables communication within a VPC which cannot be modified or deleted
+- **Route priority is decided by matching the most specific route in the route table that matches the traffic**
+
+## VPC Subnets
+- map to AZs and do not span across AZs
+- have a CIDR range that is a portion of the whole VPC.
+- CIDR ranges cannot overlap between subnets within the VPC.
+- AWS reserves 5 IP addresses in each subnet – first 4 and last one
+- Each subnet is associated with a route table which define its behavior
+- **Public subnets** – inbound/outbound Internet connectivity via IGW
+- **Private subnets** – outbound Internet connectivity via an NAT or VGW
+- **Protected subnets** – no outbound connectivity and used for regulated workloads
+
+## VPC ENI (Elastic Network Interface)
+- default ENI, eth0, is attached to an instance (which cannot be detached) with one or more secondary detachable ENIs (eth1-ethn)
+- has primary private, one or more secondary private, public, Elastic IP address, security groups, MAC address and source/destination check flag attributes associated
+- An ENI in one subnet can be attached to an instance in the same or another subnet, in the same AZ and the same VPC
+- Security group membership of an ENI can be changed
+- with pre allocated Mac Address can be used for applications with special licensing requirements
+
+## VPC Security Groups vs Network Access Control Lists
+
+| Stateful | Statless |
+| Instance level | Subnet level |
+| Only allows ALLOW rules | Both Allot and Deny rules |
+| Evaluates as a whole | Evaluated in defined order |
+
+## VPC EIP (Elastic IPs)
 
 
-
+## Tenancy option for instances
+- shared, by default, allows instances to be launched on shared tenancy
+- dedicated allows instances to be launched on a dedicated hardware
 
 
 [[EDIT](https://github.com/nealalan/aws-notes/edit/master/README.md)]
