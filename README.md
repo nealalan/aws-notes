@@ -3,8 +3,12 @@
 ## TOC
   - [AWS Well-Architected Framework](https://nealalan.github.io/aws-notes/#aws-well-architected-framework-june-2018-version)
   - [AWS Disaster Recovery Whitepaper](https://nealalan.github.io/aws-notes/#disaster-recovery-whitepaper-2014)
-  - [AWS Services Summary Cheat Sheet](https://nealalan.github.io/aws-notes/#aws-services-summary-cheat-sheet)
-
+  - [Cheat Sheet - AWS Services Summary](https://nealalan.github.io/aws-notes/#aws-services-summary-cheat-sheet)
+  - [Cheat Sheet - Security & Identity Services]()
+  - [Cheat Sheet - Network Services][]
+  - [Cheat Sheet - Compute Services]()
+  - [Cheat Sheet - Database Services]()
+  - [Cheat Sheet - Mgmt Tools](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---management-tools)
 
 # [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/) (June 2018 version)
 
@@ -463,7 +467,7 @@
 
 
 
-# AWS Services Summary Cheat Sheet
+# Cheat Sheet - AWS Services Summary 
 
 Original Source: [http://jayendrapatil.com/aws-certification-exam-cheat-sheet/](http://jayendrapatil.com/aws-certification-exam-cheat-sheet/)
 
@@ -554,7 +558,7 @@ AZs are connected with low-latency private links (not public internet)
   - use CloudWatch
 - Create an IR plan for attacks
 
-# Sheat Sheet - Security & Identity Services
+# Cheat Sheet - Security & Identity Services
 
 ## IAM
 
