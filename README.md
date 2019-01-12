@@ -3,11 +3,14 @@
 ## TOC
   - [AWS Well-Architected Framework](https://nealalan.github.io/aws-notes/#aws-well-architected-framework-june-2018-version)
   - [AWS Disaster Recovery Whitepaper](https://nealalan.github.io/aws-notes/#disaster-recovery-whitepaper-2014)
-  - [Cheat Sheet - AWS Services Summary](https://nealalan.github.io/aws-notes/#aws-services-summary-cheat-sheet)
-  - [Cheat Sheet - Security & Identity Services]()
-  - [Cheat Sheet - Network Services][]
-  - [Cheat Sheet - Compute Services]()
-  - [Cheat Sheet - Database Services]()
+  - [Cheat Sheet - AWS Services Summary](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---aws-services-summary)
+  - [Cheat Sheet - Security & Identity Services](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---security--identity-services)
+  - [Cheat Sheet - Network Services](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---network-services)
+  - [Cheat Sheet - Compute Services](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---compute-services)
+  - [Cheat Sheet - Storage Services](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---storage-services)
+  - [Cheat Sheet - Database Services](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---database-services)
+  - [Cheat Sheet - Analytic Services](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---analytics-services)
+  - [Cheat Sheet - Application Services](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---application-services)
   - [Cheat Sheet - Mgmt Tools](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---management-tools)
 
 # [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/) (June 2018 version)
