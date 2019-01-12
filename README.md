@@ -554,7 +554,9 @@ AZs are connected with low-latency private links (not public internet)
   - use CloudWatch
 - Create an IR plan for attacks
 
-## Security & Identity Services - IAM
+# Sheat Sheet - Security & Identity Services
+
+## IAM
 
 - securely control access to AWS services and resources
 - helps create and manage user identities and grant permissions for those users to access AWS resources
@@ -609,6 +611,8 @@ AZs are connected with low-latency private links (not public internet)
 - EBS volume encryption, S3 object encryption and key management can be done with CloudHSM w/ custom application scripting
 - **NOT fault tolerant** and would need to build a cluster - if one fails all the keys are lost
 - expensive, prefer AWS Key Management Service (KMS) if cost is a criteria
+
+# Cheat Sheet - Network Services
 
 ## [AWS Directory Services](https://aws.amazon.com/directoryservice/)
 
@@ -801,7 +805,9 @@ AZs are connected with low-latency private links (not public internet)
 - Geolocation routing – Specify geographic locations by continent, country, state limited to US, is based on IP accuracy
 - Failover routing – failover to a backup site if the primary site fails and becomes unreachable
 
-## Compute: EC2
+# Cheat Sheet - Compute Services
+
+## EC2
 
 - provides scalable computing capacity
 - Virtualization for EC2 is run using the Xen Hypervisor software
@@ -876,7 +882,7 @@ Static IP addresses (Elastic IP addresses)
 - for capacity errors, stop and start the instances in the placement group
 - use homogenous instance types which support enhanced networking and launch all the instances at once
 
-## Compute: Load Balancing and Auto Scaling
+## Load Balancing and Auto Scaling
 
 - Auto Scaling & ELB can be used for High Availability and Redundancy by spanning Auto Scaling groups across multiple AZs within a region and then setting up ELB to distribute incoming traffic across those AZs
 - With Auto Scaling use ELB health check with the instances to ensure that traffic is routed only to the healthy instances
@@ -951,6 +957,8 @@ Static IP addresses (Elastic IP addresses)
 - for making the volume available to different Region, the snapshot of the volume can be copied to a different region and restored as a volume
 - provides high durability and are redundant in an AZ, as the data is automatically replicated within that AZ to prevent data loss due to any single hardware component failure
 - PIOPS is designed to run transactions applications that require high and consistent IO for e.g. Relation database, NoSQL etc
+
+# Cheat Sheet - Storage Services
 
 ## S3 
 
@@ -1106,6 +1114,8 @@ Static IP addresses (Elastic IP addresses)
 - Import data can be encrypted (optional but recommended) while export is always encrypted using Truecrypt
 - Amazon will wipe the device if specified, however it will not destroy the device
 
+# Cheat Sheet - Database Services
+
 ## [Amazon RDS](https://aws.amazon.com/rds/) (Relational Database Service) ([features](https://aws.amazon.com/rds/features/))
 
 - Set up, operate, and scale a relational database in the cloud with just a few clicks.
@@ -1166,7 +1176,234 @@ Static IP addresses (Elastic IP addresses)
 - Data Pipeline jobs with EMR can be used for disaster recovery with higher RPO, lower RTO requirements
 - supports triggers to allow execution of custom actions or notifications based on item-level updates
 
-## ElastiCache
+## [ElastiCache](https://aws.amazon.com/elasticache/)
+
+- managed web service that provides in-memory caching to deploy and run Memcached or Redis protocol-compliant cache clusters
+- can be used state management to keep the web application stateless
+
+### ElastiCache with Redis
+
+- like RDS, supports Multi-AZ, Read Replicas and Snapshots
+- Read Replicas are created across AZ within same region using Redis’s asynchronous replication technology
+- Multi-AZ differs from RDS as there is no standby, but if the primary goes down a Read Replica is promoted as primary
+- Read Replicas cannot span across regions, as RDS supports
+- cannot be scaled out and if scaled up cannot be scaled down
+- allows snapshots for backup and restore
+- AOF can be enabled for recovery scenarios, to recover the data in case the node fails or service crashes. But it does not help in case the underlying hardware fails
+- Enabling Redis Multi-AZ as a Better Approach to Fault Tolerance
+
+### ElastiCache with Memcached
+
+- can be scaled up by increasing size and scaled out by adding nodes
+- nodes can span across multiple AZs within the same region
+- cached data is spread across the nodes, and a node failure will always result in some data loss from the cluster
+- supports auto discovery
+- every node should be homogenous and of same instance type
+
+### ElastiCache Redis vs Memcached
+
+- complex data objects vs simple key value storage
+- persistent vs non persistent, pure caching
+- automatic failover with Multi-AZ vs Multi-AZ not supported
+- scaling using Read Replicas vs using multiple nodes
+- backup & restore supported vs not supported
+
+## Amazon Redshift
+
+- **fully managed, fast and powerful, petabyte scale data warehouse service**
+- uses replication and continuous backups to enhance availability and improve data durability and can automatically recover from node and component failures
+- provides Massive Parallel Processing (MPP) by distributing & parallelizing queries across multiple physical resources
+- columnar data storage improving query performance and allowing advance compression techniques
+- only supports Single-AZ deployments and the nodes are available within the same AZ, if the AZ supports Redshift clusters
+- spot instances are NOT an option
+
+# Cheat Sheet - Analytics Services
+
+## [AWS Data Pipeline](https://aws.amazon.com/datapipeline/)
+
+- web service that helps you reliably process and move data between different AWS compute and storage services, as well as on-premises data sources, at specified intervals. 
+- orchestration service that helps define data-driven workflows to automate and schedule regular data movement and data processing activities
+- integrates with on-premises and cloud-based storage systems
+- allows scheduling, retry, and failure logic for the workflows
+
+## [AWS EMR](https://aws.amazon.com/emr/) (Elatic Map Reduce)
+
+- **a web service that utilizes a hosted Hadoop framework running on the web-scale infrastructure of EC2 and S3**
+- launches all nodes for a given cluster in the same Availability Zone, which improves performance as it provides higher data access rate
+- seamlessly supports Reserved, On-Demand and Spot Instances
+- consists of Master Node for management and Slave nodes, which consists of Core nodes holding data and Task nodes for performing tasks only
+- is fault tolerant for slave node failures and continues job execution if a slave node goes down
+- does not automatically provision another node to take over failed slaves
+- supports Persistent and Transient cluster types
+  - Persistent which continue to run
+  - Transient which terminates once the job steps are completed
+- supports EMRFS which allows S3 to be used as a durable HA data storage
+
+## Amazon Kinesis
+
+- enables real-time processing of streaming data at massive scale
+- provides ordering of records, as well as the ability to read and/or replay records in the same order to multiple Kinesis applications
+- data is replicated across three data centers within a region and preserved for 24 hours, by default and can be extended to 7 days
+- streams can be scaled using multiple shards, based on the partition key, with each shard providing the capacity of 1MB/sec data input and 2MB/sec data output with 1000 PUT requests per second
+
+## Kinesis vs SQS
+
+- real-time processing of streaming big data vs reliable, highly scalable hosted queue for storing messages
+- ordered records, as well as the ability to read and/or replay records in the same order vs no guarantee on data ordering (with the standard queues before the FIFO queue feature was released)
+- data storage up to 24 hours, extended to 7 days vs up to 4 days, can be configured from 1 minute to 14 days but cleared if deleted by the consumer
+- supports multiple consumers vs single consumer at a time and requires multiple queues to deliver message to multiple consumers
+
+# Cheat Sheet - Application Services
+
+## [Amazon SQS](https://aws.amazon.com/sqs/) (Scalable Queue Service)
+
+- fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications. SQS eliminates the complexity and overhead associated with managing and operating message oriented middleware, and empowers developers to focus on differentiating work
+- extremely scalable queue service and potentially handles millions of messages
+- helps build fault tolerant, distributed loosely coupled applications
+- stores copies of the messages on multiple servers for redundancy and high availability
+- supports multiple readers and writers interacting with the same queue as the same time
+- holds message for 4 days, by default, and can be changed from 1 min – 14 days after which the message is deleted
+- message needs to be explicitly deleted by the consumer once processed
+- allows send, receive and delete batching which helps club up to 10 messages in a single batch while charging price for a single message
+- handles visibility of the message to multiple consumers using Visibility Timeout, where the message once read by a consumer is not visible to the other consumers till the timeout occurs
+- can handle load and performance requirements by scaling the worker instances as the demand changes (Job Observer pattern)
+- supports delay queues to make messages available after a certain delay, can be used to differentiate from priority queues
+- supports dead letter queues, to redirect messages which failed to process after certain attempts instead of being processed repeatedly
+
+### message sample allowing short and long polling
+- returns immediately vs waits for fixed time for e.g. 20 secs
+- might not return all messages as it samples a subset of servers vs returns all available messages
+- repetitive vs helps save cost with long connection
+
+
+### SQS Design Patterns
+
+- Job Observer Pattern can help coordinate number of EC2 instances with number of job requests (Queue Size) automatically thus Improving cost effectiveness and performance
+- Priority Queue Pattern can be used to setup different queues with different handling either by delayed queues or low scaling capacity for handling messages in lower priority queues
+
+## [Amazon SNS](https://aws.amazon.com/sns/) (Simple Notification Service)
+- delivery or sending of messages to subscribing endpoints or clients
+- publisher-subscriber model
+- Producers and Consumers communicate asynchronously with subscribers by producing and sending a message to a topic
+- supports Email (plain or JSON), HTTP/HTTPS, SMS, SQS
+- supports Mobile Push Notifications to push notifications directly to mobile devices with services like Amazon Device Messaging (ADM), Apple Push Notification Service (APNS), Google Cloud Messaging (GCM) etc. supported
+- order is not guaranteed and No recall available
+- integrated with Lambda to invoke functions on notifications
+- for Email notifications, use SNS or SES directly, SQS does not work
+
+## Amazon SWF 
+
+- orchestration service to coordinate work across distributed components
+- helps define tasks, stores, assigns tasks to workers, define logic, tracks and monitors the task and maintains workflow state in a durable fashion
+- helps define tasks which can be executed on AWS cloud or on-premises
+- helps coordinating tasks across the application which involves managing inter-task dependencies, scheduling, and concurrency in accordance with the logical flow of the application
+- supports built-in retries, timeouts and logging
+- supports manual tasks
+
+### SWF Characteristics
+- deliver exactly once
+- uses long polling, which reduces number of polls without results
+- Visibility of task state via API
+- Timers, signals, markers, child workflows
+- supports versioning
+- keeps workflow history for a user-specified time
+- AWS SWF vs AWS SQS
+- task-oriented vs message-oriented
+- track of all tasks and events vs needs custom handling
+
+## AWS SWF vs AWS SQS
+- task-oriented vs message-oriented
+- track of all tasks and events vs needs custom handling
+
+## AWS SES
+
+- highly scalable and cost-effective email service
+- uses content filtering technologies to scan outgoing emails to check standards and email content for spam and malware
+- supports full fledged emails to be sent as compared to SNS where only the message is sent in Email
+- ideal for sending bulk emails at scale
+- guarantees first hop
+- eliminates the need to support custom software or applications to do heavy lifting of email transport
+
+# Cheat Sheet - Management Tools
+
+## Amazon CloudFormation
+
+- gives developers and systems administrators an easy way to create and manage a collection of related AWS resources
+- Resources can be updated, deleted and modified in a orderly, controlled and predictable fashion, in effect applying version control to the AWS infrastructure as code done for software code
+- supports Chef & Puppet Integration to deploy and configure right down the the application layer
+- supports Bootstrap scripts to install packages, files and services on the EC2 instances by simple describing them in the CF template
+- automatic rollback on error feature is enabled, by default, which will cause all the AWS resources that CF created successfully for a stack up to the point where an error occurred to be deleted
+- provides a WaitCondition resource to block the creation of other resources until a completion signal is received from an external source
+- allows DeletionPolicy attribute to be defined for resources in the template
+- retain to preserve resources like S3 even after stack deletion
+- snapshot to backup resources like RDS after stack deletion
+- DependsOn attribute to specify that the creation of a specific resource follows another
+- Service role is an IAM role that allows AWS CloudFormation to make calls to resources in a stack on the user’s behalf
+- support Nested stacks that can separate out reusable, common components and create dedicated templates to mix and match different templates but use nested stacks to create a single, unified stack
+
+
+## CloudFormation Template 
+- is an architectural diagram, in JSON format, and Stack is the end result of that diagram, which is actually provisioned
+- template can be used to set up the resources consistently and repeatedly over and over across multiple regions and consists of
+- List of AWS resources and their configuration values
+- An optional template file format version number
+- An optional list of template parameters (input values supplied at stack creation time)
+- An optional list of output values like public IP address using the Fn::GetAtt function
+- An optional list of data tables used to lookup static configuration values for e.g., AMI names per AZ
+
+## [Elastic BeanStalk](https://aws.amazon.com/elasticbeanstalk/)
+
+- makes it easier for developers to quickly deploy and manage applications in the AWS cloud.
+- automatically handles the deployment details of capacity provisioning, load balancing, auto-scaling and application health monitoring
+- CloudFormation supports ElasticBeanstalk
+- provisions resources to support
+  - a web application that handles HTTP(S) requests or
+  - a web application that handles background-processing (worker) tasks
+- supports Out Of the Box
+  - Apache Tomcat for Java applications
+  - Apache HTTP Server for PHP applications
+  - Apache HTTP server for Python applications
+  - Nginx or Apache HTTP Server for Node.js applications
+  - Passenger for Ruby applications
+  - MicroSoft IIS 7.5 for .Net applications
+  - Single and Multi Container Docker
+- supports custom AMI to be used
+- is designed to support multiple running environments such as one for Dev, QA, Pre-Prod and Production.
+- supports versioning and stores and tracks application versions over time allowing easy rollback to prior version
+- can provision RDS DB instance and connectivity information is exposed to the application by environment variables, but is NOT recommended for production setup as the RDS is tied up with the Elastic Beanstalk lifecycle and if deleted, the RDS instance would be deleted as well
+
+## OpsWorks
+
+- is a configuration management service that helps to configure and operate applications in a cloud enterprise by using Chef
+- helps deploy and monitor applications in stacks with multiple layers
+- supports preconfigured layers for Applications, Databases, Load Balancers, Caching
+- OpsWorks Stacks features is a set of lifecycle events – Setup, Configure, Deploy, Undeploy, and Shutdown – which automatically runs specified set of recipes at the appropriate time on each instance
+- Layers depend on Chef recipes to handle tasks such as installing packages on instances, deploying apps, running scripts, and so on
+- OpsWorks Stacks runs the recipes for each layer, even if the instance belongs to multiple layers
+- supports Auto Healing and Auto Scaling to monitor instance health, and provision new instances
+
+## CloudWatch
+
+- allows monitoring of AWS resources and applications in real time, collect and track pre configured or custom metrics and configure alarms to send notification or make resource changes based on defined rules
+- does not aggregate data across regions
+- stores the log data indefinitely, and the retention can be changed for each log group at any time
+- alarm history is stored for only 14 days
+- can be used an alternative to S3 to store logs with the ability to configure Alarms and generate metrics, however logs cannot be made public
+- Alarms exist only in the created region and the Alarm actions must reside in the same region as well
+
+## Amazon CloudTrail
+
+- records access to API calls for the AWS account made from AWS management console, SDKs, CLI and higher level AWS service
+- support many AWS services and tracks who did, from where, what & when
+- can be enabled per-region basis, a region can include global services (like IAM, STS etc), is applicable to all the supported services within that region
+- log files from different regions can be sent to the same S3 bucket
+- can be integrated with SNS to notify logs availability, CloudWatch logs log group for notifications when specific API events occur
+- call history enables security analysis, resource change tracking, trouble shooting and compliance auditing
+
+
+
+
+
 
 
 
