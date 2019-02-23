@@ -12,6 +12,11 @@
   - [Cheat Sheet - Analytic Services](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---analytics-services)
   - [Cheat Sheet - Application Services](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---application-services)
   - [Cheat Sheet - Mgmt Tools](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---management-tools)
+  - [AWS Certified Developer – Associate]()
+  - [AWS Certified Security - Specialty Certification]()
+  - [IAM - Identity & Access Management]()
+  
+
 
 # [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/) (June 2018 version)
 
@@ -1408,12 +1413,108 @@ Static IP addresses (Elastic IP addresses)
 - call history enables security analysis, resource change tracking, trouble shooting and compliance auditing
 
 
+# AWS Certified Developer – Associate
+
+The AWS Certified Developer – Associate exam validates technical expertise in developing and maintaining applications on the AWS platform. Exam concepts you should understand for this exam include:
+- Picking the right AWS services for the application
+- Leveraging AWS SDKs to interact with AWS services from your application
+- Writing code that optimizes performance of AWS services used by your application
+- Code-level application security (IAM roles, credentials, encryption, etc.)
+
+Suggested White Papers:
+- AWS Whitepaper: Architecting for the Cloud Best Practices
+- AWS CDA Exam Blueprint
+- AWS Whitepaper: Backup, Archive and Restore Approaches Using AWS
+- AWS Whitepaper: Security Best Practices
+- AWS Whitepaper: AWS Overview
+- AWS Whitepaper: AWS Development and Test on Amazon Web Services
+- AWS Whitepaper: AWS Well-Architected Framework
+- AWS Whitepaper: Overview of Security Processes
+- AWS Whitepaper: How AWS Pricing Works
+- AWS Whitepaper: Amazon Virtual Private Cloud Connectivity Options
+- AWS Whitepaper: Serverless Architectures with AWS Lambda
+- AWS Whitepaper: Running Containerized Microservices on AWS
+- AWS Whitepaper: Practicing Continuous Integration and Continuous Delivery on AWS
+- AWS Whitepaper: Optimizing Enterprise Economics with Serverless Architectures
+- AWS Whitepaper: Microservices on AWS
+- AWS Whitepaper: Blue/Green Deployments on AWS
+
+Review Concepts:
+- AWS Global Infrastructure
+- Shared Responsibility Security Model
+
+Compute: 4 services depending on what we want to do
+- EC2
+- ECS  = container images, less that you can control
+- Elastic Beanstalk
+- Lambda
+
+Storage Databases:
+- RDS = fully managed SQL databases
+- DynamoDB = Serverless NoSQL database
+- ElastiCache = In-memory Cache Engine 
+- Redshift = Petabyte-Scale Data Warehouse
+
+Security: 
+- IAM
+
+# AWS Certified Security - Specialty Certification
+
+Linux Academy: [lucid charts](https://www.lucidchart.com/documents/view/42bca91d-ad59-4835-8f3a-cf0fa41a0cd4/0) [@adriancantrill](https://twitter.com/@adriancantrill) [linkedin](https://www.linkedin.com/in/adriancantrill)
+
+Whitepapers to Read
+- AWS Certified Security Specialty Exam Blueprint
+- White Paper: NIST Cybersecurity Framework
+- White Paper: AWS Best Practices for DDoS Resiliency
+- AWS Security Checklist
 
 
 
+# IAM - Identity & Access Management
+Essentials
+- Applies globally to all AWS regions
+- Common use: Users, Groups, Roles, IAM Access Policies, API Keys, Specify a pwd policy
+- Default: Non-explicit deny rule set up on all new IAM users
+- Non-root users: permissions must be given that grant AWS service
 
+ROOT Best Practices: 
+- Delete root access keys
+- Activate MFA (hard or soft)
+- Create individual IAM users
+- Create user group to assign permissions
+- Apply an IAM password policy
 
+Policies
+- Explicit deny policy always override an explicit deny policy
+- AWS Managed Policies
+- JSON editor or Visual editor
+- Effect: Deny / Allow
+- Action: 
+- Resources: 
+- Set Actions only using MFA
+- Set Actions only from a specific IP address
 
+Users
+- Explicit deny is the default
+- Can add policies to users
+
+Groups
+- Can assign users to groups
+- Attach a policy to the group
+
+Roles
+- Connect resources (like a bucket) or access outside of AWS (such as a hybrid environment)
+- A role is something another entity can assume
+- Policies can not be attached directly to AWS services
+- You should always use roles to assign access to an EC2 instance. Never store keys in an EC2 instance. 
+- Only one role can be applied to an EC2 instances 
+
+STS (Security Token Service) - short term credentials to give access to an AWS resource
+- EC2 can access S3 temporarily
+- An application would never have long term access in a Dev Env
+- When generated can only use via API calls
+- Security Token, Access Key, Secret Access Key
+- Uses: Enterprise ID fed, Web ID fed, Between AWS accounts
 
 
 [[EDIT](https://github.com/nealalan/aws-notes/edit/master/README.md)]
