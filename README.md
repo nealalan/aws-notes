@@ -1,5 +1,7 @@
 # [nealalan.github.io](https://nealalan.github.io)/[aws-notes](https://nealalan.github.io/aws-notes)
 
+[[EDIT](https://github.com/nealalan/aws-notes/edit/master/README.md)]
+
 ## TOC
   - [AWS Well-Architected Framework](https://nealalan.github.io/aws-notes/#aws-well-architected-framework-june-2018-version)
   - [AWS Disaster Recovery Whitepaper](https://nealalan.github.io/aws-notes/#disaster-recovery-whitepaper-2014)
@@ -15,6 +17,7 @@
   - [AWS Certified Developer – Associate]()
   - [AWS Certified Security - Specialty Certification]()
   - [IAM - Identity & Access Management]()
+  - [Cloudwatch]()
   
 
 
@@ -1412,6 +1415,10 @@ Static IP addresses (Elastic IP addresses)
 - can be integrated with SNS to notify logs availability, CloudWatch logs log group for notifications when specific API events occur
 - call history enables security analysis, resource change tracking, trouble shooting and compliance auditing
 
+# AWS Certified SysOps Admin - Associate
+
+Monaitoring
+- Cloudwatch
 
 # AWS Certified Developer – Associate
 
@@ -1516,5 +1523,6 @@ STS (Security Token Service) - short term credentials to give access to an AWS r
 - Security Token, Access Key, Secret Access Key
 - Uses: Enterprise ID fed, Web ID fed, Between AWS accounts
 
+# Cloudwatch
 
 [[EDIT](https://github.com/nealalan/aws-notes/edit/master/README.md)]
