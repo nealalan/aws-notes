@@ -1525,4 +1525,14 @@ STS (Security Token Service) - short term credentials to give access to an AWS r
 
 # Cloudwatch
 
+- Monitor metrics regarding AWS services in realtime (UTC)
+- Built-in metrics, custom made metrics, on-prem metrics
+- Free metrics from EC2, EBS, RDS
+  - Retention varies (1min = 15d, 5min = 63d, 1h = 455)
+  - access directly from console in EC2 or from Cloudwatch
+- Comparisons can be overlayed
+- Dashboards can be created
+  
+
+
 [[EDIT](https://github.com/nealalan/aws-notes/edit/master/README.md)]
