@@ -14,10 +14,11 @@
   - [Cheat Sheet - Analytic Services](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---analytics-services)
   - [Cheat Sheet - Application Services](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---application-services)
   - [Cheat Sheet - Mgmt Tools](https://github.com/nealalan/aws-notes/blob/master/README.md#cheat-sheet---management-tools)
-  - [AWS Certified Developer – Associate]()
-  - [AWS Certified Security - Specialty Certification]()
-  - [IAM - Identity & Access Management]()
-  - [Cloudwatch]()
+  - [AWS Certified SysOps Admin - Associate](https://github.com/nealalan/aws-notes/blob/master/README.md#aws-certified-sysops-admin---associate)
+  - [AWS Certified Developer – Associate](https://github.com/nealalan/aws-notes/blob/master/README.md#aws-certified-developer--associate)
+  - [AWS Certified Security - Specialty Certification](https://github.com/nealalan/aws-notes/blob/master/README.md#aws-certified-security---specialty-certification)
+  - [IAM - Identity & Access Management](https://github.com/nealalan/aws-notes/blob/master/README.md#iam---identity--access-management)
+  - [Cloudwatch](https://github.com/nealalan/aws-notes/blob/master/README.md#cloudwatch-1)
   
 
 
@@ -258,7 +259,7 @@
 
 ### Key AWS Services
 1. Identity and Access Management 
-  - AWS IAM
+  - [AWS IAM](https://github.com/nealalan/aws-notes/blob/master/README.md#iam---identity--access-management)
 2. Detective Control
   - AWS CloudTrail - records AWS API calls
   - AWS Config - inventory of AWS resources and config
@@ -571,7 +572,7 @@ AZs are connected with low-latency private links (not public internet)
 
 # Cheat Sheet - Security & Identity Services
 
-## IAM
+## Security & Identity Services: IAM
 
 - securely control access to AWS services and resources
 - helps create and manage user identities and grant permissions for those users to access AWS resources
@@ -583,15 +584,14 @@ AZs are connected with low-latency private links (not public internet)
   - all permissions are implicitly denied by default
   - most restrictive policy wins
   
-## IAM Role
+## Security & Identity Services: IAM Role
 
 - helps grants and delegate access to users and services without the need of creating permanent credentials
 - IAM users or AWS services can assume a role to obtain temporary security credentials that can be used to make AWS API calls
 - needs Trust policy to define who and Permission policy to define what the user or service can access
 - used with AWS STS (Security Token Service), a lightweight web service that provides temporary, limited privilege credentials for IAM users or for authenticated federated users
 
-### IAM role scenarios
-
+IAM role scenarios
 - Service access for e.g. EC2 to access S3 or DynamoDB
 - Cross Account access for users
   - with user within the same account
@@ -602,7 +602,7 @@ AZs are connected with low-latency private links (not public internet)
   - Identity Provider using SAML 2.0, where the user can be authenticated using on premises Active Directory, Open Ldap or any SAML 2.0 compliant IdP using AssumeRoleWithSAML
   - For other Identity Providers, use Identity Broker to authenticate and provide temporary Credentials using AssumeRole (recommended) or GetFederationToken
 
-## IAM Best Practices
+## Security & Identity Services: IAM Best Practices
 
 - Do not use Root account for anything other than billing
 - Create Individual IAM users
@@ -629,7 +629,7 @@ AZs are connected with low-latency private links (not public internet)
 
 # Cheat Sheet - Network Services
 
-## [AWS Directory Services](https://aws.amazon.com/directoryservice/)
+## Network Services: [AWS Directory Services](https://aws.amazon.com/directoryservice/)
 
 - **Managed Microsoft Active Directory in the AWS Cloud**
 - gives applications in AWS access to Active Directory services
@@ -677,7 +677,7 @@ AZs are connected with low-latency private links (not public internet)
 - operate in a multi-master model
 - changes can be made on any writable server in the forest, and those changes are replicated to servers throughout the entire forest
 
-## AWS WAF (Web Application Firewall)
+## Network Services: AWS WAF (Web Application Firewall)
 
 - helps monitor the HTTP/HTTPS requests forwarded to CloudFront and allows controlling access to the content.
 - helps define Web ACLs, which is a combination of Rules, which is a combinations of Conditions and Action to block or allow
@@ -688,12 +688,12 @@ AZs are connected with low-latency private links (not public internet)
 - provides a lot of features like OWASP Top 10, HTTP rate limiting, Whitelist or blacklist, inspect and identify requests with abnormal patterns, CAPTCHA etc
 - a WAF sandwich pattern can be implemented where an autoscaled WAF sits between the Internet and Internal Load Balancer
 
-## [VPC](https://aws.amazon.com/vpc/) (Virtual Private Cloud)
+## Network Services: [VPC](https://aws.amazon.com/vpc/) (Virtual Private Cloud)
 
 - helps define a logically isolated dedicated virtual network within the AWS
 - provides control of IP addressing using CIDR block from a minimum of /28 to maximum of /16 block size
 
-## VPC Components
+## Network Services: VPC Components
 
 - Internet gateway (IGW) provides access to the Internet
 - Virtual gateway (VGW) provides access to on-premises data center through VPN and Direct Connect connections
@@ -706,21 +706,21 @@ AZs are connected with low-latency private links (not public internet)
 - Security Groups and NACLs help define security
 - Flow logs capture information about IP traffic going to and from network interfaces in your VPC
 
-## VPC NAT (Network Address Translation)
+## Network Services: VPC NAT (Network Address Translation)
 
 - allows internet access to instances in private subnet
 - performs the function of both address translation and port address translation (PAT)
 - needs source/destination check flag to be disabled as it is not actual destination of  the traffic
 - NAT gateway is a AWS managed NAT service that provides better availability, higher bandwidth, and requires less administrative effort
 
-## [VPC Route Tables](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html)
+## Network Services: [VPC Route Tables](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html)
 
 - defines rules, termed as routes, which determine where network traffic from the subnet would be routed
 - Each VPC has a Main Route table, and can have multiple custom route tables created
 - Every route table contains a local route that enables communication within a VPC which cannot be modified or deleted
 - **Route priority is decided by matching the most specific route in the route table that matches the traffic**
 
-## VPC Subnets
+## Network Services: VPC Subnets
 
 - map to AZs and do not span across AZs
 - have a CIDR range that is a portion of the whole VPC.
@@ -731,7 +731,7 @@ AZs are connected with low-latency private links (not public internet)
 - **Private subnets** – outbound Internet connectivity via an NAT or VGW
 - **Protected subnets** – no outbound connectivity and used for regulated workloads
 
-## VPC ENI (Elastic Network Interface)
+## Network Services: VPC ENI (Elastic Network Interface)
 
 - default ENI, eth0, is attached to an instance (which cannot be detached) with one or more secondary detachable ENIs (eth1-ethn)
 - has primary private, one or more secondary private, public, Elastic IP address, security groups, MAC address and source/destination check flag attributes associated
@@ -748,7 +748,7 @@ AZs are connected with low-latency private links (not public internet)
 | Only allows ALLOW rules | Both Allow and Deny rules |
 | Evaluates as a whole | Evaluated in defined order |
 
-## [VPC EIP](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html) (Elastic IPs)
+## Network Services: [VPC EIP](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html) (Elastic IPs)
 
 - is a static IP address designed for dynamic cloud computing.
 - is associated with AWS account, and not a particular instance
@@ -756,7 +756,7 @@ AZs are connected with low-latency private links (not public internet)
 - is charged for non usage, if not linked for any instance or instance associated is in stopped state
 - charged if more than one assigned to an instance
 
-## [VPC Peering](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-peering.html)
+## Network Services: [VPC Peering](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-peering.html)
 
 - allows routing of traffic between the peer VPCs using private IP addresses and no IGW or VGW required
 - No single point of failure and bandwidth bottlenecks
@@ -767,7 +767,7 @@ AZs are connected with low-latency private links (not public internet)
 - Private DNS values cannot be resolved
 - Security groups from peered VPC cannot be referred for ingress and egress rules in security group, use CIDR block instead
 
-### [VPC Endpoints](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html)
+### Network Services: [VPC Endpoints](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints.html)
 
 - enables creation of a private connection between VPC and another AWS service using its private IP address
 - does not require a public IP address, access over the Internet, NAT device, a VPN connection or AWS Direct Connect
@@ -776,7 +776,7 @@ AZs are connected with low-latency private links (not public internet)
 - **gateway endpoint** is a gateway that is a target for a specified route in your route table, used for traffic destined to a supported AWS service
 
 
-## Direct Connect
+## Network Services: Direct Connect
 
 - network service that provides an alternative to using Internet to utilize AWS services by using private dedicated network connection
 - provides Virtual Interfaces
@@ -787,7 +787,7 @@ AZs are connected with low-latency private links (not public internet)
 - Virtual Private Gateway is on the AWS side and Customer Gateway is on the Customer side
 - route propagation is enabled on VGW and not on CGW
 
-## VPN
+## Network Services: VPN
 
 - provide secure IPSec connections from on-premise computers or services to AWS over the Internet
 - is quick to setup, is cheap however it depends on the Internet speed
@@ -800,7 +800,7 @@ AZs are connected with low-latency private links (not public internet)
 | Consistent performance | Internet inherent variability |
 | Do not provide Redundancy | Provides Redundancy |
 
-## Route 53
+## Network Services: Route 53
 
 - Highly available and scalable DNS & Domain Registration Service
 - Reliable and cost-effective way to route end users to Internet applications
@@ -812,7 +812,7 @@ AZs are connected with low-latency private links (not public internet)
 - CNAME resource record sets can be created only for subdomains and cannot be mapped to the zone apex record
 - Weighted, Latency and Geolocation can be used for Active-Active while Failover routing can be used for Active-Passive multi region architecture
 
-## Route 53 [Routing Policy](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html)
+## Network Services: Route 53 [Routing Policy](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html)
 
 - Simple routing – simple round robin policy
 - Weighted round robin – assign weights to resource records sets to specify the proportion for e.g. 80%:20%
@@ -822,12 +822,12 @@ AZs are connected with low-latency private links (not public internet)
 
 # Cheat Sheet - Compute Services
 
-## EC2
+## Compute Services: EC2
 
 - provides scalable computing capacity
 - Virtualization for EC2 is run using the Xen Hypervisor software
 
-## EC2 Features
+## Compute Services: EC2 Features
 
 - Virtual computing environments, known as EC2 instances
 - Preconfigured templates for EC2 instances, known as Amazon Machine Images (AMIs), that package the bits needed for the server (including the operating system and additional software)
@@ -841,13 +841,13 @@ Static IP addresses (Elastic IP addresses)
 - Metadata, known as tags, can be created and assigned to EC2 resources
 - Virtual networks that are logically isolated from the rest of the AWS cloud, and can optionally connect to on premises network, known as Virtual private clouds (VPCs)
 
-## EC2 AMIs (Amazon Machine Images)
+## Compute Services: EC2 AMIs (Amazon Machine Images)
 
 - template from which EC2 instances can be launched quickly
 - does NOT span across across regions, and needs to be copied
 - can be shared with other specific AWS accounts or made public
 
-## EC2 Purchasing Options
+## Compute Services: EC2 Purchasing Options
 
 - Dedicated Instances - tenancy option which enables instances to run in VPC on hardware that’s isolated, dedicated to a single customer
 - Light, Medium, and Heavy Utilization Reserved Instances are no longer available for purchase and were part of the Previous Generation AWS EC2 purchasing model
@@ -876,13 +876,13 @@ Static IP addresses (Elastic IP addresses)
 - applications flexible in the timing when they can run and also able to handle interruption by storing the state externally
 - AWS will give a two minute warning if the instance is to be terminated to save any unsaved work
 
-## EC2 Enhanced Networking
+## Compute Services: EC2 Enhanced Networking
 
 - results in higher bandwidth, higher packet per second (PPS) performance, lower latency, consistency, scalability and lower jitter
 - supported using Single Root I/O Virtualization (SR-IOV) only on supported instance types
 - is supported only with an VPC (not EC2 Classic), HVM virtualization type and available by default on Amazon AMI but can be installed on other AMIs as well
 
-## EC2 Placement Group
+## Compute Services: EC2 Placement Group
 
 1. A placement group is a logical grouping of instances within a single availability zone
 2. Using placement groups enables applications to participate in a low latency, 10 Gbps network
@@ -897,13 +897,13 @@ Static IP addresses (Elastic IP addresses)
 - for capacity errors, stop and start the instances in the placement group
 - use homogenous instance types which support enhanced networking and launch all the instances at once
 
-## Load Balancing and Auto Scaling
+## Compute Services: Load Balancing and Auto Scaling
 
 - Auto Scaling & ELB can be used for High Availability and Redundancy by spanning Auto Scaling groups across multiple AZs within a region and then setting up ELB to distribute incoming traffic across those AZs
 - With Auto Scaling use ELB health check with the instances to ensure that traffic is routed only to the healthy instances
 
 
-## AWS ELB (Elastic Load Balancer)
+## Compute Services: AWS ELB (Elastic Load Balancer)
 
 - Managed load balancing service and scales automatically
 - distributes incoming application traffic across multiple EC2 instances
@@ -931,7 +931,7 @@ Static IP addresses (Elastic IP addresses)
 - for SSL termination at backend instances or support for Client Side Certificate use TCP for connections from the client to the ELB, use the SSL protocol for connections from the ELB to the back-end application, and deploy certificates on the back-end instances handling requests
 - supports a single SSL certificate, so for multiple SSL certificate multiple ELBs need to be created
 
-## Auto Scaling
+## Compute Services: Auto Scaling
 
 - ensures correct number of EC2 instances are always running to handle the load by scaling up or down automatically as demand changes
 - cannot span multiple regions.
@@ -940,14 +940,14 @@ Static IP addresses (Elastic IP addresses)
 - can be scaled using manual scaling, scheduled scaling or demand based scaling
 - cooldown period helps ensure instances are not launched or terminated before the previous scaling activity takes effect to allow the newly launched instances to start handling traffic and reduce load
 
-## EC2 Auto Scaling Groups
+## Compute Services: EC2 Auto Scaling Groups
 
 - EC2 instances are organized into groups so that they can be treated as a logical unit for the purposes of scaling and management
 - you can specify its minimum, maximum, and, desired number of EC2 instances
 - groups uses a launch configuration as a template for its EC2 instances. 
 - When you create a launch configuration, you can specify information such as the AMI ID, instance type, key pair, security groups, and block device mapping for your instance
 
-## EC2 Load Balancer (Classic Load Balancing)
+## Compute Services: EC2 Load Balancer (Classic Load Balancing)
 
 - Internet-facing load balancer 
   - has a publicly resolvable DNS name, so it can route requests from clients over the Internet to the EC2 instances that are registered with the load balancer.
@@ -959,7 +959,7 @@ Static IP addresses (Elastic IP addresses)
   - The DNS name of an internal load balancer is publicly resolvable to the private IP addresses of the nodes
   - When an internal load balancer is created, it receives a public DNS name with the following form: internal-name-123456789.region.elb.amazonaws.com
 
-## AWS EBS (Elastic Block Store)
+## Compute Services: AWS EBS (Elastic Block Store)
 
 - is virtual network attached block storage
 - volumes CANNOT be shared with multiple EC2 instances, use EFS instead
@@ -975,7 +975,7 @@ Static IP addresses (Elastic IP addresses)
 
 # Cheat Sheet - Storage Services
 
-## S3 
+## Storage Services: S3 
 
 - Key-value based object storage with unlimited storage, unlimited objects up to 5 TB for the internet
 - is an Object level storage (not a Block level storage) and cannot be used to host OS or dynamic websites 
@@ -1060,7 +1060,7 @@ Static IP addresses (Elastic IP addresses)
 - use Versioning to protect from unintended overwrites and deletions, but this does not protect against bucket deletion
 - use VPC S3 Endpoints with VPC to transfer data using Amazon internet network
 
-## AWS Glacier
+## Storage Services: AWS Glacier
 
 - suitable for archiving data, where data access is infrequent and a retrieval time of several hours (3 to 5 hours) is acceptable (Not true anymore with enhancements from AWS)
 - provides a high durability by storing archive in multiple facilities and multiple devices at a very low cost storage
@@ -1070,7 +1070,7 @@ Static IP addresses (Elastic IP addresses)
 - automatically encrypts the data using AES-256
 - upload or download data to Glacier via SSL encrypted endpoints
 
-## AWS CloudFront
+## Storage Services: AWS CloudFront
 
 - provides low latency and high data transfer speeds for distribution of static, dynamic web or streaming content to web users
 - delivers the content through a worldwide network of data centers called Edge Locations
@@ -1117,7 +1117,7 @@ Static IP addresses (Elastic IP addresses)
   - don’t want to change the current URLs
 - integrates with AWS WAF, a web application firewall that helps protect web applications from attacks by allowing rules configured based on IP addresses, HTTP headers, and custom URI strings
 
-## AWS Import/Export
+## Storage Services: AWS Import/Export
 
 - accelerates moving large amounts of data into and out of AWS using portable storage devices for transport and transfers data directly using Amazon’s high speed internal network, bypassing the internet.
 - suitable for use cases with
@@ -1191,7 +1191,7 @@ Static IP addresses (Elastic IP addresses)
 - Data Pipeline jobs with EMR can be used for disaster recovery with higher RPO, lower RTO requirements
 - supports triggers to allow execution of custom actions or notifications based on item-level updates
 
-## [ElastiCache](https://aws.amazon.com/elasticache/)
+## Database Services: [ElastiCache](https://aws.amazon.com/elasticache/)
 
 - managed web service that provides in-memory caching to deploy and run Memcached or Redis protocol-compliant cache clusters
 - can be used state management to keep the web application stateless
@@ -1223,7 +1223,7 @@ Static IP addresses (Elastic IP addresses)
 - scaling using Read Replicas vs using multiple nodes
 - backup & restore supported vs not supported
 
-## Amazon Redshift
+## Database Services: Amazon Redshift
 
 - **fully managed, fast and powerful, petabyte scale data warehouse service**
 - uses replication and continuous backups to enhance availability and improve data durability and can automatically recover from node and component failures
@@ -1241,7 +1241,7 @@ Static IP addresses (Elastic IP addresses)
 - integrates with on-premises and cloud-based storage systems
 - allows scheduling, retry, and failure logic for the workflows
 
-## [AWS EMR](https://aws.amazon.com/emr/) (Elatic Map Reduce)
+## Analytics Services: [AWS EMR](https://aws.amazon.com/emr/) (Elatic Map Reduce)
 
 - **a web service that utilizes a hosted Hadoop framework running on the web-scale infrastructure of EC2 and S3**
 - launches all nodes for a given cluster in the same Availability Zone, which improves performance as it provides higher data access rate
@@ -1254,7 +1254,7 @@ Static IP addresses (Elastic IP addresses)
   - Transient which terminates once the job steps are completed
 - supports EMRFS which allows S3 to be used as a durable HA data storage
 
-## Amazon Kinesis
+## Analytics Services: Amazon Kinesis
 
 - enables real-time processing of streaming data at massive scale
 - provides ordering of records, as well as the ability to read and/or replay records in the same order to multiple Kinesis applications
@@ -1418,7 +1418,7 @@ Static IP addresses (Elastic IP addresses)
 # AWS Certified SysOps Admin - Associate
 
 Monaitoring
-- Cloudwatch
+- [Cloudwatch](https://github.com/nealalan/aws-notes/blob/master/README.md#cloudwatch-1)
 
 # AWS Certified Developer – Associate
 
@@ -1463,7 +1463,7 @@ Storage Databases:
 - Redshift = Petabyte-Scale Data Warehouse
 
 Security: 
-- IAM
+- [IAM](https://github.com/nealalan/aws-notes/blob/master/README.md#iam---identity--access-management)
 
 # AWS Certified Security - Specialty Certification
 
