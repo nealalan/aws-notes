@@ -1532,6 +1532,32 @@ STS (Security Token Service) - short term credentials to give access to an AWS r
   - access directly from console in EC2 or from Cloudwatch
 - Comparisons can be overlayed
 - Dashboards can be created
+  - Add Widgets to dashboards
+- Alarms can be created - state: OK, Alarm, Insufficient - Config include: 
+  - Metric = a data point regarding 
+  - Threshold = limit on metric for notification
+  - Period = how long exceed threshold before a notification (ignore small spikes)
+  - Action = change the state and send notification
+- CloudWatch Alarms
+  - Cause AutoScaling
+  - Send alarms to EC2 to take an action regarding an instance
+  - Sends a notification to an SNS Topic (and the subscribers such as SQS, Lambda or email/txt)
+- CloudWatch Events = Match patterns happenin in environments and use targets to react
+  - Event Source = an operational change or schedule
+  - Rules = route matching
+  - Targets = services that react to an event (EC2, Lambda, ECS, Kinesis, Systems Manager, SNS, SQS, etc)
+  - Example: When sharing an EBS snapshot, trigger an SNS Topic and Lambda function 
+     - Cloudwatch: Events: Rules: Event Source: shareSnapshot & Lambda Function: make snapshot private
+     - Schedule: paste in EC2 instance EBS volumeID & Create a role for this specific resource: Enable the Rule
+- CloudWatch Logs - Monitor, Store & Access EC2 & On-prem logs (assuming you have an agent installed)
+  - Most common use is to get logs from CloudTrail (auditing mechanism) and Alarm if certain things happen
+  - Log Event: single record of activity captured into a strem
+  - Log Stream: sequence of logs events from source/app
+  - Log Group: collection of log streams with same access control, monitoring and retention settings
+  - Metric Filters: assigned to log groups to extract data from groups' log streams and convert into a metric data point
+  - Retention Settions: period of time logs are kept
+  
+  
   
 
 
