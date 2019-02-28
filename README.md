@@ -1417,8 +1417,9 @@ Static IP addresses (Elastic IP addresses)
 
 # AWS Certified SysOps Admin - Associate
 
-Monaitoring
+Monaitoring - Demonstrate ability to monitor availability and performance
 - [Cloudwatch](https://github.com/nealalan/aws-notes/blob/master/README.md#cloudwatch-1)
+
 
 # AWS Certified Developer – Associate
 
@@ -1524,24 +1525,24 @@ STS (Security Token Service) - short term credentials to give access to an AWS r
 - Uses: Enterprise ID fed, Web ID fed, Between AWS accounts
 
 # Cloudwatch
-
 - Monitor metrics regarding AWS services in realtime (UTC)
-- Built-in metrics, custom made metrics, on-prem metrics
-- Free metrics from EC2, EBS, RDS
-  - Retention varies (1min = 15d, 5min = 63d, 1h = 455)
+  - Built-in metrics, custom made metrics, on-prem metrics
+- Services: Free metrics from EC2, EBS, RDS
+  - Retention (1min = 15d, 5min = 63d, 1h = 455)
   - access directly from console in EC2 or from Cloudwatch
 - Comparisons can be overlayed
-- Dashboards can be created
-  - Add Widgets to dashboards
-- Alarms can be created - state: OK, Alarm, Insufficient - Config include: 
-  - Metric = a data point regarding 
-  - Threshold = limit on metric for notification
-  - Period = how long exceed threshold before a notification (ignore small spikes)
-  - Action = change the state and send notification
+- Add Widgets to dashboards
+- Alarms can be created
+  - Metrics = data we are measuring
+  - Thresholds = point notification is wanted
+  - Period = defined time before notification
+  - Action = change the state && send a notification
+- Alarm state
+  - OK, Alarm, Insufficient
 - CloudWatch Alarms
-  - Cause AutoScaling
-  - Send alarms to EC2 to take an action regarding an instance
-  - Sends a notification to an SNS Topic (and the subscribers such as SQS, Lambda or email/txt)
+  - Cause AutoScaling = trigger the scale up/down scenarios
+  - Send alarms to EC2 = trigger Recover, Stop, Term, Reboot (using per-instance required)
+  - Notification to an SNS Topic (and the subscribers such as SQS, Lambda or email/txt)
 - CloudWatch Events = Match patterns happenin in environments and use targets to react
   - Event Source = an operational change or schedule
   - Rules = route matching
