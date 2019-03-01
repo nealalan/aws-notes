@@ -1528,8 +1528,7 @@ STS (Security Token Service) - short term credentials to give access to an AWS r
 - Monitor metrics regarding AWS services in realtime (UTC)
   - Built-in metrics, custom made metrics, on-prem metrics
 - Services: Free metrics from EC2, EBS, RDS
-  - Retention (1min = 15d, 5min = 63d, 1h = 455)
-  - access directly from console in EC2 or from Cloudwatch
+- Retention (1min = 15d, 5min = 63d, 1h = 455)
 - Comparisons can be overlayed
 - Add Widgets to dashboards
 - Alarms can be created
@@ -1539,24 +1538,35 @@ STS (Security Token Service) - short term credentials to give access to an AWS r
   - Action = change the state && send a notification
 - Alarm state
   - OK, Alarm, Insufficient
-- CloudWatch Alarms
-  - Cause AutoScaling = trigger the scale up/down scenarios
-  - Send alarms to EC2 = trigger Recover, Stop, Term, Reboot (using per-instance required)
-  - Notification to an SNS Topic (and the subscribers such as SQS, Lambda or email/txt)
-- CloudWatch Events = Match patterns happenin in environments and use targets to react
-  - Event Source = an operational change or schedule
-  - Rules = route matching
-  - Targets = services that react to an event (EC2, Lambda, ECS, Kinesis, Systems Manager, SNS, SQS, etc)
-  - Example: When sharing an EBS snapshot, trigger an SNS Topic and Lambda function 
+
+CloudWatch Alarms
+- Cause AutoScaling = trigger the scale up/down scenarios
+- Send alarms to EC2 = trigger Recover, Stop, Term, Reboot (using per-instance required)
+- Notification to an SNS Topic (and the subscribers such as SQS, Lambda or email/txt)
+
+CloudWatch Events 
+- Match events and use targets to react in “near” real-time
+- Create a rule: 
+  - Event Source = an operational/state change or scheduled (1 day, 1 hour, 1 min or Cron)
+  - Rules = route an event source to a target
+  - Targets = services that react to an event 
+    - EC2, Lambda, ECS
+    - Kinesis Data Stream
+    - Systems Manager
+    - Code projects
+    - SNS, SQS
+  - Example: When sharing an EBS snapshot, trigger an SNS Topic and Lambda function OR Daily backup of an EBS Snapshot
      - Cloudwatch: Events: Rules: Event Source: shareSnapshot & Lambda Function: make snapshot private
      - Schedule: paste in EC2 instance EBS volumeID & Create a role for this specific resource: Enable the Rule
-- CloudWatch Logs - Monitor, Store & Access EC2 & On-prem logs (assuming you have an agent installed)
-  - Most common use is to get logs from CloudTrail (auditing mechanism) and Alarm if certain things happen
-  - Log Event: single record of activity captured into a strem
-  - Log Stream: sequence of logs events from source/app
-  - Log Group: collection of log streams with same access control, monitoring and retention settings
-  - Metric Filters: assigned to log groups to extract data from groups' log streams and convert into a metric data point
-  - Retention Settions: period of time logs are kept
+CloudWatch Logs 
+- Monitor, Store & Access EC2 & On-prem logs (assuming you have an agent installed)
+- Setup filters and alarm if incidents happen
+- Most common use is to get logs from CloudTrail (auditing mechanism) and Alarm if certain things happen
+- Log Event: single record of activity captured into a strem
+- Log Stream: sequence of logs events from source/app
+- Log Group: collection of log streams with same access control, monitoring and retention settings
+- Metric Filters: assigned to log groups to extract data from groups' log streams and convert into a metric data point
+- Retention Settions: period of time logs are kept
   
   
   
