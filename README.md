@@ -1087,7 +1087,7 @@ Static IP addresses (Elastic IP addresses)
 - For E2E HTTPS connection,
   - Viewers -> CloudFront needs either self signed certificate, or certificate issued by CA or ACM
   - CloudFront -> Origin needs certificate issued by ACM for ELB and by CA for other origins
-- supports GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE to get object & object headers, add, update, and delete objects
+- supports HTTP REQUEST METHODS: GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE to get object & object headers, add, update, and delete objects
   - only caches responses to GET and HEAD requests and, optionally, OPTIONS requests
   - does not cache responses to PUT, POST, PATCH, DELETE request methods and these requests are proxied back to the origin
 - object removal from cache
