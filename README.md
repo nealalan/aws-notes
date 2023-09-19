@@ -2,6 +2,8 @@
 
 [[EDIT](https://github.com/nealalan/aws-notes/edit/master/README.md)]
 
+**Outdated: This is from the first time I studied for the cert in 2018**
+
 ## TOC
   - [AWS Well-Architected Framework](https://nealalan.github.io/aws-notes/#aws-well-architected-framework-june-2018-version)
   - [AWS Disaster Recovery Whitepaper](https://nealalan.github.io/aws-notes/#disaster-recovery-whitepaper-2014)
